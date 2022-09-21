@@ -15,7 +15,7 @@ const routes: Array<RouteConfig> = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
         // component: (resolve) => require(['@/views/home/index.vue'], resolve),
         name: 'home',
-        meta: { title: '主页' }
+        meta: { title: '首页' }
       }
     ]
   },
@@ -24,7 +24,7 @@ const routes: Array<RouteConfig> = [
     component: Layout,
     children: [
       {
-        path: '/',
+        path: '/message-board', // 加斜线和不加斜线区别很大。加斜线的情况下，路由不拼上级路由，不加斜线会拼上级路由
         component: () => import(/* webpackChunkName: "message-board" */ '@/views/message-board/index.vue'),
         name: 'messageBoard',
         meta: { title: '留言板' }

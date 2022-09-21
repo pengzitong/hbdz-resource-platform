@@ -1,11 +1,9 @@
 <template>
-  <div class="message-board">11</div>
+  <div>111</div>
 </template>
 
 <script>
-export default {
-  name: 'index'
-}
+export default {}
 </script>
 
 <style scoped></style>
