@@ -24,6 +24,11 @@
       <!--            精品图片库-->
       菜单1
     </router-link>
+    <span class="vertical-line">|</span>
+    <router-link class="nav-link" to="/message-board">
+      <!--留言板-->
+      留言板
+    </router-link>
   </nav>
 </template>
 

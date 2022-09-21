@@ -12,8 +12,7 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: 'home',
-        component: () =>
-          import(/* webpackChunkName: "home" */ '../views/home/index.vue'),
+        component: () => import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
         // component: (resolve) => require(['@/views/home/index.vue'], resolve),
         name: 'home',
         meta: { title: '主页' }
@@ -21,17 +20,24 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
-    path: '/about',
+    path: '/message-board',
     component: Layout,
     children: [
       {
         path: '/',
-        component: () =>
-          import(/* webpackChunkName: "about" */ '../views/About.vue'),
-        name: 'about',
-        meta: { title: '关于' }
+        component: () => import(/* webpackChunkName: "message-board" */ '@/views/message-board/index.vue'),
+        name: 'messageBoard',
+        meta: { title: '留言板' }
       }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/404'
+  },
+  {
+    path: '/404',
+    component: () => import(/* webpackChunkName: "404" */ '@/views/404/index.vue')
   }
 ]
 
