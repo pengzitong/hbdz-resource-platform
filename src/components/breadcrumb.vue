@@ -11,11 +11,12 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Route } from 'vue-router'
 @Component
 export default class Breadcrumb extends Vue {
   private levelList: any[] = []
   @Watch('$route', { immediate: false, deep: false })
-  private routerChange(route: { path: string }) {
+  private routerChange(route: Route) {
     // if you go to the redirect page, do not update the breadcrumbs
     // if (route.path.startsWith('/redirect/')) {
     //   return
@@ -33,22 +34,22 @@ export default class Breadcrumb extends Vue {
     const first = matched[0]
 
     // 如果匹配到的首层路由不是首页，需要拼上
-    if (!this.isDashboard(first)) {
+    if (!this.isHome(first)) {
       matched = [{ path: '/home', meta: { title: '首页' } }].concat(matched)
     }
 
     this.levelList = matched.filter((item: any) => item.meta && item.meta.title && item.meta.breadcrumb !== false)
   }
 
-  private isDashboard(route: { name: string }) {
+  private isHome(route: Route) {
     const name = route && route.name
     if (!name) {
       return false
     }
-    return name.trim().toLocaleLowerCase() === 'home'.toLocaleLowerCase()
+    return name.trim().toLocaleLowerCase() === 'home'
   }
 
-  private handleLink(item: { redirect: string; path: string }) {
+  private handleLink(item: any) {
     const { redirect, path } = item
     if (redirect) {
       this.$router.push(redirect)

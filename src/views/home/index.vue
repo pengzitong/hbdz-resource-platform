@@ -45,6 +45,8 @@ import { getArticleDetail } from '@/api'
 import { IResponseBody } from 'axios'
 import { IArticle } from '@/models'
 import Test from '@/views/home/test.vue'
+import { Route } from 'vue-router'
+import { NavigationGuardNext } from 'vue-router'
 
 @Component({
   components: {
@@ -65,6 +67,11 @@ export default class Home extends Vue {
   private async mounted() {
     const res: IResponseBody<IArticle> = await getArticleDetail()
     console.log(res.data, 'res', res.data)
+  }
+
+  // 测试页面路由拦截用法
+  private beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
+    next()
   }
 }
 </script>
