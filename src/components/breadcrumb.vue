@@ -15,11 +15,11 @@ import { Vue, Component, Watch } from 'vue-property-decorator'
 export default class Breadcrumb extends Vue {
   private levelList: any[] = []
   @Watch('$route', { immediate: false, deep: false })
-  private rChange(route: any) {
+  private routerChange(route: { path: string }) {
     // if you go to the redirect page, do not update the breadcrumbs
-    if (route.path.startsWith('/redirect/')) {
-      return
-    }
+    // if (route.path.startsWith('/redirect/')) {
+    //   return
+    // }
     this.getBreadcrumb()
   }
 
@@ -29,7 +29,7 @@ export default class Breadcrumb extends Vue {
 
   private getBreadcrumb() {
     // only show routes with meta.title
-    let matched: any[] = this.$route.matched.filter(item => item.meta && item.meta.title)
+    let matched: any = this.$route.matched.filter(item => item.meta && item.meta.title)
     const first = matched[0]
 
     // 如果匹配到的首层路由不是首页，需要拼上
@@ -37,10 +37,10 @@ export default class Breadcrumb extends Vue {
       matched = [{ path: '/home', meta: { title: '首页' } }].concat(matched)
     }
 
-    this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+    this.levelList = matched.filter((item: any) => item.meta && item.meta.title && item.meta.breadcrumb !== false)
   }
 
-  private isDashboard(route: any) {
+  private isDashboard(route: { name: string }) {
     const name = route && route.name
     if (!name) {
       return false
@@ -48,7 +48,7 @@ export default class Breadcrumb extends Vue {
     return name.trim().toLocaleLowerCase() === 'home'.toLocaleLowerCase()
   }
 
-  private handleLink(item: any) {
+  private handleLink(item: { redirect: string; path: string }) {
     const { redirect, path } = item
     if (redirect) {
       this.$router.push(redirect)
