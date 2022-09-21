@@ -12,25 +12,27 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: 'home',
-        component: () => import(/* webpackChunkName: "home" */ '../views/home/index.vue'),
+        component: () =>
+          import(/* webpackChunkName: "home" */ '../views/home/index.vue'),
+        // component: (resolve) => require(['@/views/home/index.vue'], resolve),
         name: 'home',
-        meta: { title: '主页'}
+        meta: { title: '主页' }
       }
     ]
   },
   {
     path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: () => import('../views/Test.vue')
-  },
+    component: Layout,
+    children: [
+      {
+        path: '/',
+        component: () =>
+          import(/* webpackChunkName: "about" */ '../views/About.vue'),
+        name: 'about',
+        meta: { title: '关于' }
+      }
+    ]
+  }
 ]
 
 const router = new VueRouter({

@@ -1,19 +1,12 @@
 import request from '@/utils/index'
-// import qs from 'qs'
-// import { AxiosPromise } from 'axios'
+import { IResponseBody } from 'axios'
 
-// interface pageInfo {
-//   page: number,
-//   size: number
-// }
+import { IArticle, IList } from '@/models'
 
-// export function getListData(url:string, params:pageInfo):AxiosPromise {
-//   return request({
-//     url: url + '?' + qs.stringify(params, { indices: false }),
-//     method: 'get'
-//   })
-// }
+export const getUser = (form: IList) => {
+  // console.log(request.get<IList>('/person/info', form))
+}
 
-import { IList } from '@/models'
-
-export const getUser = (form: IList) => request.get<IList>('/person/info', form)
+export const getArticleDetail: () => Promise<IResponseBody<IArticle>> = () => {
+  return request.get('https://api.test2.jk.com/community/share/article/detail?id=2784')
+}

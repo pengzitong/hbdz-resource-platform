@@ -1,0 +1,145 @@
+/* 文字对齐方式 */
+
+.text-align__left {
+  text-align: left;
+}
+.text-align__right {
+  text-align: right;
+}
+.text-align__center {
+  text-align: center;
+}
+
+/* flex 布局 */
+.display-flex {
+  display: flex;
+}
+.justify-content__center {
+  justify-content: center;
+}
+
+.justify-content__between {
+  justify-content: space-between;
+}
+
+.justify-content__around {
+  justify-content: space-around;
+}
+
+.justify-content__start {
+  justify-content: start;
+}
+
+.justify-content__end {
+  justify-content: end;
+}
+
+.align-items__center {
+  align-items: center;
+}
+
+.align-items__start {
+  align-items: flex-start;
+}
+
+.align-items__end {
+  align-items: flex-end;
+}
+
+.align-items__baseline {
+  align-items: baseline;
+}
+
+.align-items__stretch {
+  align-items: stretch;
+}
+
+.flex-wrap__wrap {
+  flex-wrap: wrap;
+}
+
+.flex-wrap__nowrap {
+  flex-wrap: nowrap;
+}
+
+/* position 定位 */
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-fixed {
+  position: fixed;
+}
+
+.position-sticky {
+  position: sticky;
+}
+
+.position-static {
+  position: static;
+}
+
+/* display */
+.display-block {
+  display: block;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
+
+@mixin ellipsis-lines {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+//最多显示2行
+.ellipsis-lines__two {
+  -webkit-line-clamp: 2;
+  @include ellipsis-lines;
+}
+
+// 以下两种处理文本一行溢出的类名视情况而定
+//最多显示1行 代码有毒 有可能会出现文本横向截断的问题
+.ellipsis-lines__one {
+  -webkit-line-clamp: 1;
+  @include ellipsis-lines;
+}
+
+// 最多显示一行  注意看line单词
+.ellipsis-line__one {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.border {
+  border: 1px solid #e9ebef;
+}
+
+.border-primary {
+  //border: 1px solid var(--primary-color);
+  border: 0.5px solid #bdd2ed;
+}
+
+.box-shadow {
+  box-shadow: 0 0px 2px 0 rgba(0, 0, 0, 0.2);
+}

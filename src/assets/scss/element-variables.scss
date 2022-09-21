@@ -1,0 +1,17 @@
+/* 改变主题色变量 */
+//$--color-primary: #409EFF;
+$--color-primary: #137bc7;
+/// borderRadius|1|Radius|0
+$--border-radius-base: 0px !default;
+/// borderRadius|1|Radius|0
+$--border-radius-small: 0px !default;
+
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+:root {
+  --primary-color: #137bc7
+}
+
