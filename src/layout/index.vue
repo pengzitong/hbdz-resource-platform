@@ -30,6 +30,7 @@ export default class Home extends Vue {
 
 <style lang="scss" scoped>
 .layout-container {
+  min-width: 1200px;
   &.hide-page {
     display: none;
   }
@@ -41,7 +42,7 @@ export default class Home extends Vue {
   }
   .layout-content {
     margin: 0 auto;
-    width: 1200px;
+    max-width: 1200px;
   }
 }
 </style>

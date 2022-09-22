@@ -14,7 +14,7 @@
       <!--精品图片库-->
       <quality-photo-gallery class="mb-12" />
       <!--最新动态-->
-      <latest-news />
+      <latest-news class="mb-12" />
     </div>
     <div class="home-right">
       <!--轮播图-->

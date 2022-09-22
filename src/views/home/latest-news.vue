@@ -26,6 +26,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import SectionContainer from '@/components/section-container.vue'
+
 @Component({
   components: { SectionContainer }
 })
