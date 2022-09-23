@@ -1,30 +1,49 @@
 <template>
   <nav class="layout-nav">
-    <router-link class="nav-link" to="/home">
-      <!--网站首页-->
-      菜单1
-    </router-link>
+    <router-link class="nav-link" to="/home">网站首页</router-link>
+
     <span class="vertical-line">|</span>
-    <router-link class="nav-link" to="/about">
-      <!--            平台概况-->
-      菜单1
-    </router-link>
+
+    <span class="drop-menu-wrapper" @click="$router.push({ path: platformIntroductionNavLists[0].command })">
+      <el-dropdown placement="bottom" @command="handleCommand">
+        <span class="nav-link">平台概况</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="item in platformIntroductionNavLists" :key="item.command" :command="item.command">
+            <span class="nav-link">{{ item.name }}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
+
     <span class="vertical-line">|</span>
+
     <router-link class="nav-link" to="/about">
       <!--标本查询-->
       菜单1
     </router-link>
+
     <span class="vertical-line">|</span>
+
     <router-link class="nav-link" to="/about">
       <!--            系统矿物学-->
       菜单1
     </router-link>
+
     <span class="vertical-line">|</span>
-    <router-link class="nav-link" to="/about">
-      <!--            精品图片库-->
-      菜单1
-    </router-link>
+
+    <span class="drop-menu-wrapper" @click="$router.push({ path: photoGalleryNavLists[0].command })">
+      <el-dropdown placement="bottom" @command="handleCommand">
+        <span class="nav-link">精品图片库</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="item in photoGalleryNavLists" :key="item.command" :command="item.command">
+            <span class="nav-link">{{ item.name }}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
+
     <span class="vertical-line">|</span>
+
     <router-link class="nav-link" to="/message-board">
       <!--留言板-->
       留言板
@@ -35,7 +54,23 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 @Component({})
-export default class Nav extends Vue {}
+export default class Nav extends Vue {
+  private readonly platformIntroductionNavLists = [
+    { name: '平台简介', command: '/platform-introduction?target=' },
+    { name: '平台发展历程', command: '/platform-introduction?target=history' }
+  ]
+
+  private readonly photoGalleryNavLists = [
+    { name: '矿物精品', command: '/photo-gallery/mineral-products' },
+    { name: '岩石精品', command: '/photo-gallery/other-products-ys' },
+    { name: '矿石精品', command: '/photo-gallery/other-products-ks' },
+    { name: '化石精品', command: '/photo-gallery/other-products-hs' }
+  ]
+
+  private handleCommand(command: string) {
+    this.$router.push(command)
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -44,14 +79,19 @@ export default class Nav extends Vue {}
   align-items: center;
   justify-content: center;
   color: #fff;
+  animation: ani ease-in-out 0.6s;
   .nav-link {
     display: inline-block;
     color: #fff;
     line-height: 40px;
+    font-size: 15px;
+  }
+  .drop-menu-wrapper {
+    cursor: pointer;
   }
   .vertical-line {
     display: inline-block;
-    margin: 0 20px;
+    margin: 0 40px;
   }
 }
 </style>

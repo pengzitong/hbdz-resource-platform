@@ -32,6 +32,50 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
+    path: '/platform-introduction',
+    component: Layout,
+    children: [
+      {
+        path: '/platform-introduction',
+        component: () => import(/* webpackChunkName: "platform-introduction" */ '@/views/platform-introduction/index.vue'),
+        name: 'platformIntroduction',
+        meta: { title: '平台概况' }
+      }
+    ]
+  },
+  {
+    path: '/photo-gallery',
+    component: Layout,
+    meta: { title: '精品图片库' },
+    redirect: '/photo-gallery/mineral-products',
+    children: [
+      {
+        path: '/photo-gallery/mineral-products',
+        component: () => import(/* webpackChunkName: "photo-gallery" */ '@/views/photo-gallery/mineral-products.vue'),
+        name: 'mineralProducts',
+        meta: { title: '矿物精品' }
+      },
+      {
+        path: '/photo-gallery/other-products-ys',
+        component: () => import(/* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'),
+        name: 'ysProducrts',
+        meta: { title: '岩石精品' }
+      },
+      {
+        path: '/photo-gallery/other-products-ks',
+        component: () => import(/* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'),
+        name: 'ksProducrts',
+        meta: { title: '矿石精品' }
+      },
+      {
+        path: '/photo-gallery/other-products-hs',
+        component: () => import(/* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'),
+        name: 'hsProducrts',
+        meta: { title: '化石精品' }
+      }
+    ]
+  },
+  {
     path: '*',
     redirect: '/404'
   },

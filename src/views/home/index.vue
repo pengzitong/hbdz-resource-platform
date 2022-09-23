@@ -2,21 +2,21 @@
   <div class="home-container">
     <div class="home-left">
       <!--欢迎模块-->
-      <welcome class="mb-12" />
+      <!--      <welcome class="mb-12" />-->
       <!--标本检索-->
       <specimen-searching class="mb-12" />
       <!--重要专题-->
       <important-topics class="mb-12" />
       <!--视频资源-->
-      <video-resource class="mb-12" />
+      <!--      <video-resource class="mb-12" />-->
       <!--矿晶三维-->
-      <mineral-3d class="mb-12" />
+      <!--      <mineral-3d class="mb-12" />-->
       <!--精品图片库-->
       <quality-photo-gallery class="mb-12" />
       <!--最新动态-->
-      <latest-news class="mb-12" />
+      <!--      <latest-news class="mb-12" />-->
     </div>
-    <div class="home-right">
+    <div class="home-right" v-if="false">
       <!--轮播图-->
       <slider class="mb-12" />
       <!--资源目录-->

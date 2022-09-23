@@ -44,7 +44,7 @@ export default class slider extends Vue {}
     .image-wrapper {
       .display-image {
         width: 100%;
-        height: 150px;
+        height: 180px;
       }
       .display-image-label {
         position: absolute;
@@ -60,6 +60,9 @@ export default class slider extends Vue {}
     }
     .el-carousel ::v-deep .el-carousel__indicators {
       bottom: 25px;
+      left: unset;
+      right: 2%;
+      transform: translateX(0);
     }
   }
 }
