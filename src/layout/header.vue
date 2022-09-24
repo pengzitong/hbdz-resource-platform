@@ -1,9 +1,8 @@
 <template>
   <div class="layout-header">
-    <!--    湖北地质博物馆标本资源库-->
     <div class="header-wrapper">
       <el-image @click="$router.push('/home')" class="header-logo" fit="cover" :src="require('@/assets/images/logo.jpg')"></el-image>
-      <div class="header-text">这里是一个测试文案</div>
+      <div class="header-text">湖北地质博物馆标本资源库</div>
     </div>
     <div class="nav-wrapper">
       <layout-nav></layout-nav>

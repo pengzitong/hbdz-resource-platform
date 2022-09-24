@@ -3,11 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
-    'plugin:vue/essential',
-    'eslint:recommended',
-    '@vue/typescript/recommended'
-  ],
+  extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/typescript/recommended'],
   parserOptions: {
     ecmaVersion: 2020
   },
@@ -17,6 +13,7 @@ module.exports = {
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off', //关闭any警告
+    '@typescript-eslint/no-extra-semi': 'off',
 
     curly: [2, 'multi-line'], // 允许使用不带大括号的单行if、else if、else、for、while或do，同时仍然强制对其他实例使用大括号。
     eqeqeq: [0, 'always'], // 强制使用===和！==在任何情况下
@@ -234,15 +231,7 @@ module.exports = {
       2,
       'always', // //或/*后面必须至少有一个空格。
       {
-        markers: [
-          'global',
-          'globals',
-          'eslint',
-          'eslint-disable',
-          '*package',
-          '!',
-          ','
-        ]
+        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
       }
     ],
     'template-curly-spacing': [2, 'never'], // 不允许大括号对中有空格。
@@ -262,6 +251,6 @@ module.exports = {
     ],
     'array-bracket-spacing': [2, 'never'], // 不允许数组括号内有空格
     'vue/singleline-html-element-content-newline': 'off', // 在单行元素的内容前后强制换行符 关闭
-    'vue/html-self-closing': 'off', // 将自结束符号（自关闭标签）强制作为配置的样式 关闭
+    'vue/html-self-closing': 'off' // 将自结束符号（自关闭标签）强制作为配置的样式 关闭
   }
 }

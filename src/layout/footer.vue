@@ -1,5 +1,5 @@
 <template>
-  <footer class="layout-footer">
+  <footer class="layout-footer mt-30">
     <pre class="copyright">
 
 关于我们

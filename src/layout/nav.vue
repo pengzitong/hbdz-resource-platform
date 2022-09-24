@@ -17,10 +17,18 @@
 
     <span class="vertical-line">|</span>
 
-    <router-link class="nav-link" to="/about">
-      <!--标本查询-->
-      菜单1
-    </router-link>
+    <!--    <router-link class="nav-link" to="/about">标本查询</router-link>-->
+
+    <span class="drop-menu-wrapper" @click="$router.push({ path: specimenNavLists[0].command })">
+      <el-dropdown placement="bottom" @command="handleCommand">
+        <span class="nav-link">标本查询</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item v-for="item in specimenNavLists" :key="item.command" :command="item.command">
+            <span class="nav-link">{{ item.name }}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
 
     <span class="vertical-line">|</span>
 
@@ -58,6 +66,15 @@ export default class Nav extends Vue {
   private readonly platformIntroductionNavLists = [
     { name: '平台简介', command: '/platform-introduction?target=' },
     { name: '平台发展历程', command: '/platform-introduction?target=history' }
+  ]
+
+  private readonly specimenNavLists = [
+    { name: '矿物标本查询', command: '/specimen-search/specimen-list-kw' },
+    { name: '岩石标本查询', command: '/specimen-search/specimen-list-ys' },
+    { name: '矿石标本查询', command: '/specimen-search/specimen-list-ks' },
+    { name: '化石标本查询', command: '/specimen-search/specimen-list-hs' },
+    { name: '标本图片查询', command: '/specimen-search/specimen-images' },
+    { name: '综合查询', command: '/specimen-search/union-search' }
   ]
 
   private readonly photoGalleryNavLists = [
