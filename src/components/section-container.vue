@@ -20,7 +20,7 @@ export default class SectionContainer extends Vue {
 
 <style lang="scss" scoped>
 .section-container {
-  max-width: 1200px;
+  max-width: 1150px;
   padding: 15px 0;
   /*box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);*/
   /*box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);*/

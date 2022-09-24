@@ -1,6 +1,7 @@
 <template>
   <div class="not-found">
-    <el-button type="text" @click="handleBack">页面走丢了，点击返回上一级页面</el-button>
+    <div class="tip-text">页面不存在.</div>
+    <el-button @click="handleBack" size="small">返回上一页</el-button>
   </div>
 </template>
 
@@ -16,6 +17,13 @@ export default class NotFound extends Vue {
 
 <style lang="scss" scoped>
 .not-found {
-  padding: 10px;
+  padding: 30px 20px;
+  .tip-text {
+    font-size: 30px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--primary-color);
+  }
 }
 </style>

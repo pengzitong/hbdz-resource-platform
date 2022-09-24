@@ -11,13 +11,13 @@
     </div>
     <div class="right-wrapper">
       <el-form class="search-form" inline>
-        <el-form-item label="资源中外文名：">
+        <el-form-item label="资源中外文名">
           <el-input size="small"></el-input>
         </el-form-item>
-        <el-form-item label="保存单位：">
+        <el-form-item label="保存单位">
           <el-input size="small"></el-input>
         </el-form-item>
-        <el-form-item label="产地：">
+        <el-form-item label="产地">
           <el-input size="small"></el-input>
         </el-form-item>
         <el-form-item label=" ">
@@ -113,6 +113,8 @@ export default class SpecimenList extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/scss/table.scss';
+
 .specimen-list {
   display: flex;
   .left-wrapper {
@@ -141,30 +143,6 @@ export default class SpecimenList extends Vue {
 
       .el-form-item {
         margin-bottom: 0;
-      }
-    }
-    .el-table {
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      ::v-deep .el-table__header-wrapper {
-        thead {
-          color: #555;
-          th {
-            padding: 3px 0;
-            background-color: #fbfbfb;
-            background-image: -webkit-linear-gradient(top, #fff, #f5f5f5);
-          }
-        }
-      }
-      ::v-deep .el-table__body-wrapper {
-        tbody {
-          color: #555;
-          td {
-            padding: 3px 0;
-          }
-        }
       }
     }
   }

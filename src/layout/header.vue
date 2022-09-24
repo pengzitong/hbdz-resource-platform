@@ -1,7 +1,12 @@
 <template>
   <div class="layout-header">
     <div class="header-wrapper">
-      <el-image @click="$router.push('/home')" class="header-logo" fit="cover" :src="require('@/assets/images/logo.jpg')"></el-image>
+      <el-image
+        @click="$router.push('/home')"
+        class="header-logo"
+        fit="cover"
+        :src="require('@/assets/images/logo.jpg')"
+      ></el-image>
       <div class="header-text">湖北地质博物馆标本资源库</div>
     </div>
     <div class="nav-wrapper">
@@ -39,7 +44,7 @@ export default class Header extends Vue {
     margin: 0 auto;
     line-height: 200px;
     height: 200px;
-    width: 1200px;
+    width: 1150px;
     font-size: 35px;
     color: rgba(235, 235, 235);
     .header-logo {

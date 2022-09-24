@@ -117,7 +117,6 @@ const routes: Array<RouteConfig> = [
           import(
             /* webpackChunkName: "union-search-list" */ '@/views/specimen-search/specimen-router-view.vue'
           ),
-        name: 'unionSearchList',
         meta: { title: '标本数据列表' },
         children: [
           {
@@ -191,6 +190,9 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/404',
+    meta: {
+      title: '404'
+    },
     component: () => import(/* webpackChunkName: "404" */ '@/views/404/index.vue')
   }
 ]

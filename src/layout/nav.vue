@@ -1,58 +1,67 @@
 <template>
   <nav class="layout-nav">
-    <router-link class="nav-link" to="/home">网站首页</router-link>
+    <router-link class="nav-link main-link" to="/home">网站首页</router-link>
 
-    <span class="vertical-line">|</span>
-
-    <span class="drop-menu-wrapper" @click="$router.push({ path: platformIntroductionNavLists[0].command })">
+    <span
+      v-if="false"
+      class="drop-menu-wrapper main-link"
+      @click="$router.push({ path: platformIntroductionNavLists[0].command })"
+    >
       <el-dropdown placement="bottom" @command="handleCommand">
         <span class="nav-link">平台概况</span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in platformIntroductionNavLists" :key="item.command" :command="item.command">
+          <el-dropdown-item
+            v-for="item in platformIntroductionNavLists"
+            :key="item.command"
+            :command="item.command"
+          >
             <span class="nav-link">{{ item.name }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </span>
-
-    <span class="vertical-line">|</span>
 
     <!--    <router-link class="nav-link" to="/about">标本查询</router-link>-->
 
-    <span class="drop-menu-wrapper" @click="$router.push({ path: specimenNavLists[0].command })">
+    <span
+      class="drop-menu-wrapper main-link"
+      @click="$router.push({ path: specimenNavLists[0].command })"
+    >
       <el-dropdown placement="bottom" @command="handleCommand">
         <span class="nav-link">标本查询</span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in specimenNavLists" :key="item.command" :command="item.command">
+          <el-dropdown-item
+            v-for="item in specimenNavLists"
+            :key="item.command"
+            :command="item.command"
+          >
             <span class="nav-link">{{ item.name }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </span>
 
-    <span class="vertical-line">|</span>
+    <router-link class="nav-link main-link" to="/about">重要专题</router-link>
 
-    <router-link class="nav-link" to="/about">
-      <!--            系统矿物学-->
-      菜单1
-    </router-link>
-
-    <span class="vertical-line">|</span>
-
-    <span class="drop-menu-wrapper" @click="$router.push({ path: photoGalleryNavLists[0].command })">
+    <span
+      class="drop-menu-wrapper"
+      @click="$router.push({ path: photoGalleryNavLists[0].command })"
+    >
       <el-dropdown placement="bottom" @command="handleCommand">
         <span class="nav-link">精品图片库</span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in photoGalleryNavLists" :key="item.command" :command="item.command">
+          <el-dropdown-item
+            v-for="item in photoGalleryNavLists"
+            :key="item.command"
+            :command="item.command"
+          >
             <span class="nav-link">{{ item.name }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </span>
 
-    <span class="vertical-line">|</span>
-
-    <router-link class="nav-link" to="/message-board">
+    <router-link v-if="false" class="nav-link" to="/message-board">
       <!--留言板-->
       留言板
     </router-link>
@@ -102,13 +111,22 @@ export default class Nav extends Vue {
     color: #fff;
     line-height: 40px;
     font-size: 15px;
+    position: relative;
+  }
+  .main-link {
+    position: relative;
+    line-height: 40px;
+    margin-right: 100px;
+    &::after {
+      content: '|';
+      position: absolute;
+      height: 100%;
+      right: -50px;
+      top: 0;
+    }
   }
   .drop-menu-wrapper {
     cursor: pointer;
-  }
-  .vertical-line {
-    display: inline-block;
-    margin: 0 40px;
   }
 }
 </style>
