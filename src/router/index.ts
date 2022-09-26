@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import Layout2 from '@/layout2/index.vue'
 
 Vue.use(VueRouter)
 
@@ -181,6 +182,110 @@ const routes: Array<RouteConfig> = [
           ),
         name: 'hsProducrts',
         meta: { title: '化石精品' }
+      }
+    ]
+  },
+  // 管理端路由
+  {
+    path: '/login',
+    meta: {
+      title: '登录'
+    },
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue')
+  },
+  {
+    path: '/dashboard',
+    component: Layout2,
+    children: [
+      {
+        path: '/dashboard',
+        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
+        name: 'Dashboard',
+        meta: { title: '首页' }
+      }
+    ]
+    // component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue')
+  },
+  {
+    path: '/specimen-management',
+    component: Layout2,
+    children: [
+      {
+        path: '/specimen-management',
+        component: () =>
+          import(
+            /* webpackChunkName: "specimen-management" */ '@/views/specimen-management/index.vue'
+          ),
+        name: 'SpecimenManagement',
+        meta: { title: '标本管理' }
+      },
+      {
+        path: '/specimen-management/add',
+        component: () =>
+          import(
+            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/detail.vue'
+          ),
+        name: 'SpecimenManagementDetail',
+        meta: { title: '新增标本' }
+      },
+      {
+        path: '/specimen-management/edit',
+        component: () =>
+          import(
+            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/detail.vue'
+          ),
+        name: 'SpecimenManagementDetail',
+        meta: { title: '编辑标本' }
+      },
+      {
+        path: '/specimen-management/detail',
+        component: () =>
+          import(
+            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/detail.vue'
+          ),
+        name: 'SpecimenManagementDetail',
+        meta: { title: '标本详情' }
+      }
+    ]
+  },
+  {
+    path: '/photo-management',
+    component: Layout2,
+    children: [
+      {
+        path: '/photo-management',
+        component: () =>
+          import(/* webpackChunkName: "photo-management" */ '@/views/photo-management/index.vue'),
+        name: 'PhotoManagement',
+        meta: { title: '图片库管理' }
+      },
+      {
+        path: '/photo-management/add',
+        component: () =>
+          import(
+            /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
+          ),
+        name: 'PhotoManagementDetail',
+        meta: { title: '新增图片' }
+      },
+      {
+        path: '/photo-management/edit',
+        component: () =>
+          import(
+            /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
+          ),
+        name: 'PhotoManagementDetail',
+        meta: { title: '编辑图片' }
+      },
+      {
+        path: '/photo-management/detail',
+        component: () =>
+          import(
+            /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
+          ),
+        name: 'PhotoManagementDetail',
+        meta: { title: '图片详情' }
       }
     ]
   },

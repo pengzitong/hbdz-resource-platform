@@ -1,4 +1,4 @@
-# vue-ts-app
+# hbdz-resource-platform
 
 ## Project setup
 ```
