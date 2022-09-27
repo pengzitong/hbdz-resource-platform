@@ -1,6 +1,7 @@
 <template>
   <div
-    class="image-show border"
+    class="image-show"
+    :class="border ? 'border' : ''"
     :style="{
       '--width': width + 'px',
       '--height': height + 'px',
@@ -34,7 +35,8 @@ export default class ImageShow extends Vue {
   @Prop(String) private readonly subTitle!: string
   @Prop(String) private readonly subBackground!: string
   @Prop({ default: 'center' }) private readonly align!: string
-  @Emit('click')
+  @Prop({ default: true }) private readonly border!: boolean
+  // @Emit('click')
   private handleClick(test: string) {
     console.log('click', test)
     // return 111

@@ -8,13 +8,14 @@
       ></i>
       <breadcrumb />
     </span>
-    <el-button type="text" class="user-avatar">注销</el-button>
+    <el-button type="text" class="user-avatar" @click="handleLogout">注销</el-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Breadcrumb from '@/components/breadcrumb.vue'
+import { confirm } from '@/utils/decorator'
 
 @Component({ components: { Breadcrumb } })
 export default class Header extends Vue {
@@ -26,6 +27,11 @@ export default class Header extends Vue {
     const status = this.sidebarStatus === 'opened' ? 'closed' : 'opened'
     this.$store.commit('setSidebarStatus', status)
     console.log('handleCollapseClick')
+  }
+
+  @confirm('确定要退出登录吗？', '提示')
+  private handleLogout() {
+    console.log('logout')
   }
 }
 </script>

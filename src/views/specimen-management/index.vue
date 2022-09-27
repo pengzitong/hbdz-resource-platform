@@ -67,9 +67,22 @@
       <el-button icon="el-icon-plus" type="primary" size="small" @click="handleAdd">
         新增标本
       </el-button>
-      <el-button icon="el-icon-upload2" type="primary" size="small" @click="handleQuery">
-        批量上传
-      </el-button>
+
+      <!--      <el-button icon="el-icon-upload2" type="primary" size="small" @click="handleQuery">-->
+      <!--        批量上传-->
+      <!--      </el-button>-->
+
+      <el-upload
+        style="display: inline-block; margin: 0 10px"
+        action=""
+        :show-file-list="false"
+        :auto-upload="false"
+        :on-change="handleFileChange"
+        multiple
+      >
+        <el-button icon="el-icon-upload2" type="primary" size="small">批量上传</el-button>
+        <!--        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
+      </el-upload>
       <el-button icon="el-icon-download" type="warning" size="small" @click="handleQuery">
         下载
       </el-button>
@@ -89,9 +102,9 @@
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="name" label="操作" width="180">
           <template>
-            <el-button type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
-            <el-button type="text" size="small">删除</el-button>
+            <el-button type="text" size="small" @click="handleView">查看</el-button>
+            <el-button type="text" size="small" @click="handleEdit">编辑</el-button>
+            <el-button type="text" size="small" @click="handleDelete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -103,6 +116,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Pagination from '@/components/pagination.vue'
+import { confirm } from '@/utils/decorator'
 
 @Component({ components: { Pagination } })
 export default class SpecimenManagement extends Vue {
@@ -140,6 +154,20 @@ export default class SpecimenManagement extends Vue {
     }
   ]
 
+  private doUpload() {
+    // todo 上传文件给服务器并刷新列表
+    console.log('upload')
+  }
+
+  private handleFileChange(file: any) {
+    const fileExt = file.name.replace(/.+\./, '')
+    if (['zip', 'rar', 'gz'].indexOf(fileExt.toLowerCase()) === -1) {
+      this.$message.error('格式不符合要求，请上传zip、rar、gz格式的压缩包')
+      return
+    }
+    this.doUpload()
+  }
+
   private handleQuery() {
     console.log(this.query, 'query')
   }
@@ -149,7 +177,20 @@ export default class SpecimenManagement extends Vue {
   }
 
   private handleAdd() {
-    this.$router.push('/specimen-management/add')
+    this.$router.push('/specimen-management/detail?metaTitle=新增标本')
+  }
+
+  private handleView() {
+    this.$router.push('/specimen-management/detail?metaTitle=标本详情')
+  }
+
+  private handleEdit() {
+    this.$router.push('/specimen-management/detail?metaTitle=编辑标本')
+  }
+
+  @confirm()
+  private handleDelete() {
+    console.log('delete')
   }
 }
 </script>

@@ -6,7 +6,10 @@
         fit="cover"
         :src="require('@/assets/images/logo.jpg')"
       ></el-image>
-      <span class="menu-title-text" :class="isCollapse ? 'collapse' : ''">湖北地质博物馆</span>
+      <span class="menu-title-text" :class="isCollapse ? 'collapse' : ''">
+        <!--        湖北地质博物馆-->
+        一个测试文案噢
+      </span>
     </div>
     <el-menu
       :default-active="activeMenu"

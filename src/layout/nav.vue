@@ -41,7 +41,25 @@
       </el-dropdown>
     </span>
 
-    <router-link class="nav-link main-link" to="/about">重要专题</router-link>
+    <!--    <router-link class="nav-link main-link" to="/about">重要专题</router-link>-->
+
+    <span
+      class="drop-menu-wrapper main-link"
+      @click="$router.push({ path: importantTopicNavLists[0].command })"
+    >
+      <el-dropdown placement="bottom" @command="handleCommand">
+        <span class="nav-link">重要专题</span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            v-for="item in importantTopicNavLists"
+            :key="item.command"
+            :command="item.command"
+          >
+            <span class="nav-link">{{ item.name }}</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </span>
 
     <span
       class="drop-menu-wrapper"
@@ -86,6 +104,11 @@ export default class Nav extends Vue {
     { name: '综合查询', command: '/specimen-search/union-search' }
   ]
 
+  private readonly importantTopicNavLists = [
+    { name: '古生物化石群专题', command: '/important-topic/topic-list?metaTitle=古生物化石群专题' },
+    { name: '矿床专题', command: '/important-topic/topic-list?metaTitle=矿床专题' }
+  ]
+
   private readonly photoGalleryNavLists = [
     { name: '矿物精品', command: '/photo-gallery/mineral-products' },
     { name: '岩石精品', command: '/photo-gallery/other-products-ys' },
@@ -105,7 +128,7 @@ export default class Nav extends Vue {
   align-items: center;
   justify-content: center;
   color: #fff;
-  animation: ani ease-in-out 0.6s;
+  /*animation: ani ease-in-out 0.6s;*/
   .nav-link {
     display: inline-block;
     color: #fff;

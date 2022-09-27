@@ -45,6 +45,11 @@ export default class dashboard extends Vue {}
     height: 100vh;
     overflow: auto;
     background: #545c64;
+    /* 隐藏滚动条 */
+    &::-webkit-scrollbar {
+      display: none;
+      /*background-color:transparent;*/
+    }
   }
   .right-wrapper {
     flex: 1;

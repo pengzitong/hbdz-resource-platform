@@ -56,7 +56,7 @@ export default class Header extends Vue {
       height: 55px;
     }
     .header-text {
-      animation: ani ease-in-out 0.6s;
+      /*animation: ani ease-in-out 0.6s;*/
     }
   }
   .nav-wrapper {

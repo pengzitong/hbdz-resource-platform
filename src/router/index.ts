@@ -142,6 +142,26 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
+    path: '/important-topic',
+    component: Layout,
+    children: [
+      {
+        path: '/important-topic/topic-list',
+        component: () =>
+          import(/* webpackChunkName: "topics-list" */ '@/views/important-topic/topics-list.vue'),
+        name: 'topicsList',
+        meta: { title: '特色专题' } // xx特色专题
+      },
+      {
+        path: '/important-topic/topic-detail',
+        component: () =>
+          import(/* webpackChunkName: "topic-detail" */ '@/views/important-topic/topic-detail.vue'),
+        name: 'topicsDetail',
+        meta: { title: '专题详情' } // xx专题详情
+      }
+    ]
+  },
+  {
     path: '/photo-gallery',
     component: Layout,
     meta: { title: '精品图片库' },
@@ -221,24 +241,6 @@ const routes: Array<RouteConfig> = [
         meta: { title: '标本管理' }
       },
       {
-        path: '/specimen-management/add',
-        component: () =>
-          import(
-            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/detail.vue'
-          ),
-        name: 'SpecimenManagementDetail',
-        meta: { title: '新增标本' }
-      },
-      {
-        path: '/specimen-management/edit',
-        component: () =>
-          import(
-            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/detail.vue'
-          ),
-        name: 'SpecimenManagementDetail',
-        meta: { title: '编辑标本' }
-      },
-      {
         path: '/specimen-management/detail',
         component: () =>
           import(
@@ -261,31 +263,13 @@ const routes: Array<RouteConfig> = [
         meta: { title: '图片库管理' }
       },
       {
-        path: '/photo-management/add',
-        component: () =>
-          import(
-            /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
-          ),
-        name: 'PhotoManagementDetail',
-        meta: { title: '新增图片' }
-      },
-      {
-        path: '/photo-management/edit',
-        component: () =>
-          import(
-            /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
-          ),
-        name: 'PhotoManagementDetail',
-        meta: { title: '编辑图片' }
-      },
-      {
         path: '/photo-management/detail',
         component: () =>
           import(
             /* webpackChunkName: "photo-management-detail" */ '@/views/photo-management/detail.vue'
           ),
         name: 'PhotoManagementDetail',
-        meta: { title: '图片详情' }
+        meta: { title: '图片详情' } // 新增、编辑、详情
       }
     ]
   },
@@ -309,6 +293,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.meta && to.query.metaTitle) {
+    to.meta.title = to.query.metaTitle
+  }
   if (to.meta?.title) {
     document.title = to.meta.title
   }

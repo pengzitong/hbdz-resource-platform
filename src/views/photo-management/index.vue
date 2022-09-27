@@ -46,8 +46,8 @@
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="name" label="操作" width="180">
           <template>
-            <el-button type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small" @click="handleView">查看</el-button>
+            <el-button type="text" size="small" @click="handleEdit">编辑</el-button>
             <el-button type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
@@ -104,7 +104,15 @@ export default class PhotoManagement extends Vue {
   }
 
   private handleAdd() {
-    this.$router.push('/photo-management/add')
+    this.$router.push('/photo-management/detail?metaTitle=新增图片')
+  }
+
+  private handleView() {
+    this.$router.push('/photo-management/detail?metaTitle=图片详情')
+  }
+
+  private handleEdit() {
+    this.$router.push('/photo-management/detail?metaTitle=编辑图片')
   }
 }
 </script>
