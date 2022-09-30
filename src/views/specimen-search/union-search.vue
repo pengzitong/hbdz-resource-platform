@@ -5,48 +5,48 @@
         <tr>
           <td>
             <el-form-item class="td-form-item" label="平台资源号：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.platform_resource_number" size="small"></el-input>
             </el-form-item>
           </td>
           <td>
             <el-form-item class="td-form-item" label="资源编号：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.resource_number" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
         <tr>
           <td>
             <el-form-item class="td-form-item" label="资源名称：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.resource_cn_name" size="small"></el-input>
             </el-form-item>
           </td>
           <td>
             <el-form-item class="td-form-item" label="资源外文名称：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.resource_en_name" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
         <tr>
           <td>
             <el-form-item class="td-form-item" label="产地：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.origin" size="small"></el-input>
             </el-form-item>
           </td>
           <td>
             <el-form-item class="td-form-item" label="省：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.province" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
         <tr>
           <td>
             <el-form-item class="td-form-item" label="国家：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.country" size="small"></el-input>
             </el-form-item>
           </td>
           <td>
             <el-form-item class="td-form-item" label="保存单位：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.save_unit" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
@@ -54,12 +54,12 @@
         <tr>
           <td>
             <el-form-item class="td-form-item" label="资源提供者：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.provider" size="small"></el-input>
             </el-form-item>
           </td>
           <td>
             <el-form-item class="td-form-item" label="资源形成时代：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.formative_era" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
@@ -78,7 +78,7 @@
       </table>
       <el-form-item>
         <el-button type="primary" size="small" @click="handleSearch">查询</el-button>
-        <el-button size="small">重新输入</el-button>
+        <el-button size="small" @click="handleReset">重新输入</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -88,13 +88,17 @@
 import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class UnionSearch extends Vue {
-  private form = {
-    platFormSourceNo: '',
-    sourceNo: ''
-  }
+  private form: any = {}
 
   private handleSearch() {
+    this.$store.commit('setCacheQuery', {
+      ...this.form // 传递给下一个页面使用
+    })
     this.$router.push('/specimen-search/union-search-list')
+  }
+
+  private handleReset() {
+    this.form = {}
   }
 }
 </script>

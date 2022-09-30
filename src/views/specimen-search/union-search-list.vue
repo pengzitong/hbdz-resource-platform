@@ -2,77 +2,139 @@
   <div class="union-search-list">
     <el-form class="search-form" inline>
       <el-form-item label="资源中外文名">
-        <el-input size="small"></el-input>
+        <el-input
+          v-model="searchForm.resource_name"
+          size="small"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="保存单位">
-        <el-input size="small"></el-input>
+        <el-input
+          v-model="searchForm.save_unit"
+          size="small"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="产地">
-        <el-input size="small"></el-input>
+        <el-input v-model="searchForm.origin" size="small" @keyup.enter.native="query"></el-input>
       </el-form-item>
       <el-form-item label="类别">
-        <el-input size="small"></el-input>
+        <el-input
+          v-model="searchForm.specimen_type"
+          size="small"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label=" ">
-        <el-button type="primary" size="small">查询</el-button>
+        <el-button type="primary" size="small" @click="query">查询</el-button>
       </el-form-item>
     </el-form>
 
-    <el-table class="mt-12" border :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="date" label="日期" width="180"></el-table-column>
-      <el-table-column prop="name" label="资源名称" width="180">
+    <el-table
+      v-loading="loading"
+      class="mt-12"
+      border
+      :data="specimenLists"
+      stripe
+      style="width: 100%"
+    >
+      <el-table-column prop="platform_resource_number" label="平台资源号"></el-table-column>
+      <el-table-column prop="resource_name" label="资源名称" width="200">
         <template slot-scope="scope">
-          <el-link type="primary" style="font-weight: 400" @click="handleSourceNameClick">
-            {{ scope.row.name2 }}
+          <el-link
+            type="primary"
+            style="font-weight: 400"
+            @click="handleSourceNameClick(scope.row)"
+          >
+            {{ scope.row.resource_name }}
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
+      <el-table-column prop="foreign_language_name" label="资源外文名" />
+      <el-table-column prop="complete_origin" label="产地" width="300" />
+      <el-table-column prop="collation_name" label="资源归类" />
+      <el-table-column prop="stock_location" label="库存位置号" />
+      <el-table-column prop="specimen_number" label="标本编号" />
     </el-table>
 
-    <pagination />
+    <pagination
+      @currentChange="handleCurrentChange"
+      @sizeChange="handleSizeChange"
+      :current-page.sync="pageInfo.page"
+      :page-size.sync="pageInfo.num"
+      :page-count="pageInfo.all_page"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import Pagination from '@/components/pagination.vue'
+import { querySpecimenList } from '@/api/specimen'
+import { ISpecimen } from '@/models'
+import PaginationToQuery from '@/mixins/pagination-to-query'
+
 @Component({
   components: {
     Pagination
   }
 })
-export default class UnionSearchList extends Vue {
-  private tableData = [
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1517 弄'
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1519 弄'
-    },
-    {
-      date: '2016-05-03',
-      name2: '王小虎',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1516 弄'
-    }
-  ]
+export default class UnionSearchList extends Mixins(PaginationToQuery) {
+  private searchForm = {
+    resource_name: undefined,
+    resource_cn_name: undefined,
+    save_unit: undefined,
+    origin: undefined,
+    specimen_type: undefined
+  }
 
-  private handleSourceNameClick() {
-    this.$router.push('/specimen-search/union-search-detail')
+  private specimenLists: ISpecimen[] = []
+
+  private mounted() {
+    const { resource_cn_name, resource_en_name, save_unit, origin }: any =
+      this.$store.state.cacheQuery
+    resource_en_name && (this.searchForm.resource_name = resource_en_name)
+    resource_cn_name && (this.searchForm.resource_name = resource_cn_name)
+    save_unit && (this.searchForm.save_unit = save_unit)
+    origin && (this.searchForm.origin = origin)
+    this.query()
+  }
+
+  private async query() {
+    try {
+      this.loading = true
+      const params: any = {
+        ...this.searchForm,
+        page: this.pageInfo.page - 1,
+        num: this.pageInfo.num
+      }
+      const { resource_cn_name, resource_en_name }: any = this.$store.state.cacheQuery
+      // 仅使用一次即清空store，否则用户在手动修改查询条件下此处判断会有冲突
+      this.$store.commit('setCacheQuery', {})
+
+      if (resource_cn_name || resource_en_name) {
+        // 如果外部携带了字段过来，优先按外层的条件查
+        params.resource_name = undefined
+        params.resource_cn_name = resource_cn_name
+        params.resource_en_name = resource_en_name
+      }
+
+      const { data, all_page } = await querySpecimenList(params)
+
+      this.specimenLists = [...data]
+      this.pageInfo.all_page = all_page
+    } catch (e) {
+      console.warn(e)
+    } finally {
+      this.loading = false
+    }
+  }
+
+  private handleSourceNameClick({ specimen_number }: ISpecimen) {
+    this.$router.push({
+      path: '/specimen-search/union-search-detail',
+      query: { specimen_number }
+    })
   }
 }
 </script>

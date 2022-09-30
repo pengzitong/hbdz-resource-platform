@@ -5,22 +5,27 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :page-sizes="[5, 10, 20, 50, 100]"
+      :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
+      :page-count="pageCount"
     ></el-pagination>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 @Component
 export default class Pagination extends Vue {
-  private currentPage = 0
+  @Prop({ default: 1 }) currentPage!: number
+  @Prop({ default: 5 }) pageSize!: number
+  @Prop({ default: 0 }) pageCount: number = 0
+
+  @Emit('sizeChange')
   private handleSizeChange(val: number) {
     console.log(`每页 ${val} 条`)
   }
+  @Emit('currentChange')
   private handleCurrentChange(val: number) {
     console.log(`当前页: ${val}`)
   }
@@ -29,6 +34,7 @@ export default class Pagination extends Vue {
 
 <style lang="scss" scoped>
 .pagination-wrapper {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 }

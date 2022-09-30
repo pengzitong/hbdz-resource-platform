@@ -10,6 +10,8 @@ Component.registerHooks(['beforeRouteEnter', 'beforeRouteLeave', 'beforeRouteUpd
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.$imageUrlHost =
+  process.env.VUE_APP_API_ENV == 'development' ? process.env.VUE_APP_API_URL : ''
 
 new Vue({
   router,

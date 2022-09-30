@@ -1,12 +1,16 @@
-import { AxiosRequestConfig, IResponseBody } from 'axios'
+import { AxiosRequestConfig } from 'axios'
 import request from './request'
 
 interface IAxiosGet {
-  <T = any>(url: string, params?: Record<string, any>, config?: AxiosRequestConfig | null): Promise<IResponseBody<T>>
+  <T = any>(
+    url: string,
+    params?: Record<string, any>,
+    config?: AxiosRequestConfig | null
+  ): Promise<T>
 }
 
 interface IAxiosPostOrPutOrDelete {
-  <T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<IResponseBody<T>>
+  <T = any>(url: string, data?: Record<string, any>, config?: AxiosRequestConfig): Promise<T>
 }
 
 const get: IAxiosGet = (url, params, config) => {

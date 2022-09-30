@@ -7,14 +7,22 @@
       '--height': height + 'px',
       '--align': align
     }"
-    @click="handleClick('测试参数')"
   >
-    <div class="image-block" @click="handleImageClick">
-      <el-image fit="cover" :src="src" class="display-image"></el-image>
+    <div class="image-block" @click="handleImageClick(item)">
+      <el-image
+        fit="cover"
+        :preview-src-list="previewSrcList"
+        :src="src"
+        class="display-image"
+      ></el-image>
     </div>
-    <div class="image-title" @click="handleTitleClick" :style="{ backgroundColor: subBackground }">
-      <div class="image-main-title">{{ title }}</div>
-      <div class="image-sub-title" v-if="subTitle">{{ subTitle }}</div>
+    <div
+      class="image-title"
+      @click="handleTitleClick(item)"
+      :style="{ backgroundColor: subBackground }"
+    >
+      <div class="image-main-title ellipsis-lines__one">{{ title }}</div>
+      <div class="image-sub-title ellipsis-lines__one" v-if="subTitle">{{ subTitle }}</div>
     </div>
   </div>
 </template>
@@ -36,6 +44,8 @@ export default class ImageShow extends Vue {
   @Prop(String) private readonly subBackground!: string
   @Prop({ default: 'center' }) private readonly align!: string
   @Prop({ default: true }) private readonly border!: boolean
+  @Prop({ default: () => ({}) }) private readonly item!: any
+  @Prop({ default: () => [] }) private readonly previewSrcList!: string[]
   // @Emit('click')
   private handleClick(test: string) {
     console.log('click', test)
@@ -43,12 +53,12 @@ export default class ImageShow extends Vue {
     //  此处的写法相当于 this.$emit('click', 111, test)
   }
   @Emit('image-click')
-  private handleImageClick() {
-    console.log('1')
+  private handleImageClick(item: any) {
+    console.log('1', item)
   }
   @Emit('title-click')
-  private handleTitleClick() {
-    console.log('2')
+  private handleTitleClick(item: any) {
+    console.log('2', item)
   }
 }
 </script>

@@ -3,27 +3,31 @@
     <div class="gallery-list">
       <image-show
         class="image-show mt-12"
-        v-for="(item, index) in 12"
-        :key="index"
-        :width="185"
-        :height="167"
-        @click="handleClick"
+        v-for="item in sourceData"
+        :key="item.gallery_id"
+        :title="item.name"
+        :src="`${$imageUrlHost}${item.url}`"
+        @image-click="handleClick(item)"
+        @title-click="handleClick(item)"
       />
-      <div v-for="item in 12" :key="item" style="width: 185px; height: 0"></div>
+      <div v-for="item in sourceData" :key="-item.gallery_id" style="width: 250px; height: 0"></div>
     </div>
   </section-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import ImageShow from '@/components/image-show.vue'
 import SectionContainer from '@/components/section-container.vue'
+import { IPhoto } from '@/models'
 @Component({
   components: { ImageShow, SectionContainer }
 })
 export default class qualityPhotoGallery extends Vue {
-  private handleClick(value: string) {
-    console.log(value, 'value')
+  @Prop({ default: () => [] }) sourceData!: IPhoto[]
+
+  private handleClick({ gallery_id, name }: any) {
+    this.$router.push(`/photo-gallery/mineral-products?metaTitle=${name}&gallery_id=${gallery_id}`)
   }
 }
 </script>

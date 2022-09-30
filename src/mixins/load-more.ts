@@ -21,9 +21,9 @@ export default class LoadMore extends Mixins() {
     this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight
     this.scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
     // windows在控制台打开的情况下会导致失效，需要+1px解决
-    if (this.scrollTop + this.clientHeight >= this.scrollHeight) {
-      ;(this as any).page++
-      ;(this as any).queryList(true)
+    if (this.scrollTop + this.clientHeight >= this.scrollHeight && !(this as any).listLoading) {
+      ;(this as any).pageInfo.page++
+      ;(this as any).query(true)
     }
   }
 }

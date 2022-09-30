@@ -1,7 +1,15 @@
 <template>
   <div style="margin-left: 20px">
-    <!--    {{ selectedKeys }}-->
-    <a-tree default-expand-all show-icon show-line :selected-keys="selectedKeys" :tree-data="treeData" @select="onSelect">
+    <a-tree
+      default-expand-all
+      show-icon
+      show-line
+      :selected-keys="selectedKeys"
+      :tree-data="treeData"
+      :replaceFields="{ children: 'child_params', title: 'name', key: 'class_no' }"
+      @select="onSelect"
+    >
+      <span slot="title" slot-scope="scope">{{ scope.name }}({{ scope.num }})</span>
       <span slot="switcherIcon">
         <span class="folder-wrapper">
           <a-icon class="icon-arrow" type="down" />
@@ -13,34 +21,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'ant-design-vue/lib/tree/style'
+import { Tree, Icon } from 'ant-design-vue'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
+// import Tree from 'ant-design-vue/lib/tree/index.js'
 
-import Tree from 'ant-design-vue/lib/tree'
-import { Icon } from 'ant-design-vue'
-
-export default {
-  name: 'CustomTree',
+@Component({
   components: {
     [Tree.name]: Tree,
     [Icon.name]: Icon
-  },
-  props: {
-    treeData: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      selectedKeys: ['0-0-0-0']
-    }
-  },
-  methods: {
-    onSelect(checkedKeys, info) {
-      console.log(checkedKeys, 'checkedKeys')
-      this.selectedKeys = checkedKeys
-    }
+  }
+})
+export default class AntTree extends Vue {
+  @Prop({ default: () => [] }) private readonly treeData!: Array<any>
+  @Prop({ default: () => [] }) private readonly selectedKeys!: any[]
+
+  @Emit('change')
+  private onSelect(checkedKeys: string[]) {
+    // this.$emit('update:selected-keys', checkedKeys)
+    // this.$emit('change')
   }
 }
 </script>
@@ -50,9 +50,9 @@ export default {
 /*background-color: unset;*/
 /*}*/
 .folder-wrapper {
-  margin-left: -10px;
+  margin-left: -2px;
   .icon-arrow {
-    transform: translateX(-10px);
+    transform: translateX(-3px);
   }
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="layout-container" :class="!showAll ? 'hide-page' : ''">
-    <el-switch class="switch-button" v-model="showAll" />
+    <el-switch v-if="false" class="switch-button" v-model="showAll" />
     <layout-header />
     <div class="layout-content">
       <breadcrumb />

@@ -4,15 +4,15 @@
       <!--欢迎模块-->
       <!--      <welcome class="mb-12" />-->
       <!--标本检索-->
-      <specimen-searching class="mb-12" />
+      <specimen-searching class="mb-12" :photoGalleryConditionList="bestPhotoGallery" />
       <!--重要专题-->
-      <important-topics class="mb-12" />
+      <important-topics class="mb-12" :sourceData="importantTopics" />
       <!--视频资源-->
       <!--      <video-resource class="mb-12" />-->
       <!--矿晶三维-->
       <!--      <mineral-3d class="mb-12" />-->
       <!--精品图片库-->
-      <quality-photo-gallery class="mb-12" />
+      <quality-photo-gallery class="mb-12" :sourceData="bestPhotoGallery" />
       <!--最新动态-->
       <!--      <latest-news class="mb-12" />-->
     </div>
@@ -41,12 +41,13 @@ import LatestNews from '@/views/home/latest-news.vue'
 import Slider from '@/views/home/slider.vue'
 import ResourceDir from '@/views/home/resource-dir.vue'
 import BrowseRanking from '@/views/home/browse-ranking.vue'
-import { getArticleDetail } from '@/api'
-import { IResponseBody } from 'axios'
-import { IArticle } from '@/models'
+import { queryHomePageSource } from '@/api/home.ts'
+// import { IResponseBody } from 'axios'
+import { ITopic, IPhoto } from '@/models'
 import Test from '@/views/home/test.vue'
 import { Route } from 'vue-router'
 import { NavigationGuardNext } from 'vue-router'
+import { Mutation } from 'vuex-class'
 
 @Component({
   components: {
@@ -64,9 +65,27 @@ import { NavigationGuardNext } from 'vue-router'
   }
 })
 export default class Home extends Vue {
+  private importantTopics: ITopic[] = []
+  private bestPhotoGallery: IPhoto[] = []
+
+  @Mutation('setImportantTopicNavLists') setImportantTopicNavLists: any
+
   private async mounted() {
-    const res: IResponseBody<IArticle> = await getArticleDetail()
-    console.log(res.data, 'res', res.data)
+    // const res: IResponseBody<IArticle> = await getArticleDetail()
+    this.queryHomePageSource()
+  }
+
+  private async queryHomePageSource() {
+    const res = await queryHomePageSource()
+    this.importantTopics = res.important_topics
+    this.bestPhotoGallery = res.best_photo_gallery
+
+    // 根据获取到的专题更新专题下拉菜单组
+    const importantTopicNavLists = this.importantTopics.map(({ name, topic_id }) => ({
+      name,
+      command: `/important-topic/topic-list?metaTitle=${name}&topic_id=${topic_id}`
+    }))
+    this.setImportantTopicNavLists(importantTopicNavLists)
   }
 
   // 测试页面路由拦截用法

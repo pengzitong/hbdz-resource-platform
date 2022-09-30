@@ -1,5 +1,7 @@
 <template>
   <nav class="layout-nav">
+    <!--    {{ importantTopicNavLists }}-->
+
     <router-link class="nav-link main-link" to="/home">网站首页</router-link>
 
     <span
@@ -88,6 +90,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { State } from 'vuex-class'
+
 @Component({})
 export default class Nav extends Vue {
   private readonly platformIntroductionNavLists = [
@@ -96,24 +100,50 @@ export default class Nav extends Vue {
   ]
 
   private readonly specimenNavLists = [
-    { name: '矿物标本查询', command: '/specimen-search/specimen-list-kw' },
-    { name: '岩石标本查询', command: '/specimen-search/specimen-list-ys' },
-    { name: '矿石标本查询', command: '/specimen-search/specimen-list-ks' },
-    { name: '化石标本查询', command: '/specimen-search/specimen-list-hs' },
+    {
+      name: '矿物标本查询',
+      command: '/specimen-search/specimen-list?metaTitle=矿物标本查询&specimen_type=矿物'
+    },
+    {
+      name: '岩石标本查询',
+      command: '/specimen-search/specimen-list?metaTitle=岩石标本查询&specimen_type=岩石'
+    },
+    {
+      name: '矿石标本查询',
+      command: '/specimen-search/specimen-list?metaTitle=矿石标本查询&specimen_type=矿石'
+    },
+    {
+      name: '化石标本查询',
+      command: '/specimen-search/specimen-list?metaTitle=化石标本查询&specimen_type=化石'
+    },
     { name: '标本图片查询', command: '/specimen-search/specimen-images' },
     { name: '综合查询', command: '/specimen-search/union-search' }
   ]
 
-  private readonly importantTopicNavLists = [
-    { name: '古生物化石群专题', command: '/important-topic/topic-list?metaTitle=古生物化石群专题' },
-    { name: '矿床专题', command: '/important-topic/topic-list?metaTitle=矿床专题' }
-  ]
+  // private readonly importantTopicNavLists = [
+  //   { name: '古生物化石群专题', command: '/important-topic/topic-list?metaTitle=古生物化石群专题' },
+  //   { name: '矿床专题', command: '/important-topic/topic-list?metaTitle=矿床专题' }
+  // ]
+
+  @State('importantTopicNavLists') importantTopicNavLists: any
 
   private readonly photoGalleryNavLists = [
-    { name: '矿物精品', command: '/photo-gallery/mineral-products' },
-    { name: '岩石精品', command: '/photo-gallery/other-products-ys' },
-    { name: '矿石精品', command: '/photo-gallery/other-products-ks' },
-    { name: '化石精品', command: '/photo-gallery/other-products-hs' }
+    {
+      name: '矿物精品',
+      command: '/photo-gallery/mineral-products?metaTitle=矿物精品&gallery_id=2'
+    },
+    {
+      name: '岩石精品',
+      command: '/photo-gallery/mineral-products?metaTitle=岩石精品&gallery_id=4'
+    },
+    {
+      name: '矿石精品',
+      command: '/photo-gallery/mineral-products?metaTitle=矿石精品&gallery_id=3'
+    },
+    {
+      name: '化石精品',
+      command: '/photo-gallery/mineral-products?metaTitle=化石精品&gallery_id=1'
+    }
   ]
 
   private handleCommand(command: string) {

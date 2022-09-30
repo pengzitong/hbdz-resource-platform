@@ -1,18 +1,23 @@
 <template>
   <el-carousel class="el-carousel" height="460px">
-    <el-carousel-item v-for="item in 4" :key="item">
+    <el-carousel-item v-for="(item, index) in banners" :key="index">
       <div class="image-wrapper">
-        <el-image class="display-image" fit="cover" :src="require('@/assets/images/news0.jpeg')"></el-image>
-        <div class="display-image-label">图片描述文案图片描述文案图片描述文案图片描图片描述文案图片描述文案图片描述文案图片描述文案</div>
+        <el-image class="display-image" fit="cover" :src="`${$imageUrlHost}${item.url}`"></el-image>
+        <div class="display-image-label">
+          {{ item.text }}
+        </div>
       </div>
     </el-carousel-item>
   </el-carousel>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 @Component
-export default class StaticSlider extends Vue {}
+export default class StaticSlider extends Vue {
+  @Prop({ default: () => [] })
+  private readonly banners!: any[]
+}
 </script>
 
 <style lang="scss" scoped>

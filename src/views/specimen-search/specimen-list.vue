@@ -5,109 +5,187 @@
         <el-link type="primary">目录导航</el-link>
       </div>
       <div class="left-wrapper__content">
-        <ant-tree :treeData="treeData" />
+        <ant-tree
+          v-if="treeData.length"
+          :treeData="treeData"
+          :selected-keys.sync="selectedKeys"
+          @change="handleSelectedKeysChange"
+        />
         <!--        <DemoTree />-->
       </div>
     </div>
     <div class="right-wrapper">
       <el-form class="search-form" inline>
         <el-form-item label="资源中外文名">
-          <el-input size="small"></el-input>
+          <el-input
+            v-model="searchForm.resource_name"
+            size="small"
+            @keyup.enter.native="query"
+          ></el-input>
         </el-form-item>
         <el-form-item label="保存单位">
-          <el-input size="small"></el-input>
+          <el-input
+            v-model="searchForm.save_unit"
+            size="small"
+            @keyup.enter.native="query"
+          ></el-input>
         </el-form-item>
         <el-form-item label="产地">
-          <el-input size="small"></el-input>
+          <el-input
+            v-model="searchForm.origin"
+            size="small"
+            style="width: 120px"
+            @keyup.enter.native="query"
+          ></el-input>
         </el-form-item>
         <el-form-item label=" ">
-          <el-button type="primary" size="small">查询</el-button>
+          <el-button type="primary" size="small" @click="query">查询</el-button>
         </el-form-item>
       </el-form>
 
-      <el-table class="mt-12" border :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="资源名称" width="180">
+      <el-table
+        v-loading="loading"
+        class="mt-12"
+        border
+        :data="specimenLists"
+        stripe
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="platform_resource_number"
+          show-overflow-tooltip
+          label="平台资源号"
+          width="100"
+        ></el-table-column>
+        <el-table-column prop="resource_name" show-overflow-tooltip label="资源名称">
           <template slot-scope="scope">
-            <el-link type="primary" style="font-weight: 400" @click="handleSourceNameClick">
-              {{ scope.row.name2 }}
+            <el-link
+              type="primary"
+              style="font-weight: 400"
+              @click="handleSourceNameClick(scope.row)"
+            >
+              {{ scope.row.resource_name }}
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="foreign_language_name" show-overflow-tooltip label="资源外文名" />
+        <el-table-column prop="complete_origin" show-overflow-tooltip label="产地" width="200" />
+        <el-table-column prop="collation_name" show-overflow-tooltip label="资源归类" width="80" />
+        <el-table-column
+          prop="stock_location"
+          show-overflow-tooltip
+          label="库存位置号"
+          width="100"
+        />
+        <el-table-column prop="specimen_number" show-overflow-tooltip label="标本编号" width="80" />
       </el-table>
 
-      <pagination />
+      <pagination
+        @currentChange="handleCurrentChange"
+        @sizeChange="handleSizeChange"
+        :current-page.sync="pageInfo.page"
+        :page-size.sync="pageInfo.num"
+        :page-count="pageInfo.all_page"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import AntTree from '@/components/ant-tree.vue'
-import DemoTree from '@/components/demo-tree.vue'
+// import DemoTree from '@/components/demo-tree.vue'
 import Pagination from '@/components/pagination.vue'
+import { querySpecimenClassification, querySpecimenList } from '@/api/specimen'
+import { ISpecimen } from '@/models'
+import PaginationToQuery from '@/mixins/pagination-to-query'
 @Component({
   components: {
     AntTree,
-    DemoTree,
+    // DemoTree,
     Pagination
   }
 })
-export default class SpecimenList extends Vue {
-  private treeData = [
-    {
-      title: 'parent 1',
-      key: '0-0',
-      children: [
-        {
-          title: 'parent 1-0',
-          key: '0-0-0',
-          // disabled: true,
-          children: [
-            { title: 'leaf', key: '0-0-0-0' },
-            { title: 'leaf', key: '0-0-0-1' }
-          ]
-        },
-        {
-          title: 'parent 1-1',
-          key: '0-0-1',
-          children: [{ key: '0-0-1-0', slots: { title: 'title0010' } }]
-        }
-      ]
-    }
-  ]
+export default class SpecimenList extends Mixins(PaginationToQuery) {
+  private selectedKeys: string[] = []
 
-  private tableData = [
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1517 弄'
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1519 弄'
-    },
-    {
-      date: '2016-05-03',
-      name2: '王小虎',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1516 弄'
-    }
-  ]
+  private searchForm: any = {
+    resource_name: undefined,
+    save_unit: undefined,
+    origin: undefined,
+    specimen_type: undefined
+  }
 
-  private handleSourceNameClick() {
-    this.$router.push('/specimen-search/union-search-detail')
+  private treeData = []
+
+  private specimenLists: ISpecimen[] = []
+
+  @Watch('$route')
+  private routeChange() {
+    this.init() // 分页各种信息也要重置才行
+    // location.reload() // 粗暴方式
+  }
+
+  private mounted() {
+    this.init()
+  }
+
+  private init() {
+    this.resetFields()
+    const { specimen_type }: any = this.$route.query
+    this.searchForm.specimen_type = specimen_type
+    this.querySpecimenClassification()
+    this.query()
+  }
+
+  private resetFields() {
+    this.searchForm = {}
+    this.selectedKeys = []
+    this.treeData = []
+    this.pageInfo.page = 1
+  }
+
+  private async querySpecimenClassification() {
+    try {
+      const { specimen_type = '矿物' }: any = this.$route.query
+      const { data } = await querySpecimenClassification()
+      this.treeData = data.filter((item: { name: string }) => item.name === specimen_type)
+    } catch (e) {
+      console.warn(e, 'querySpecimenClassification')
+    }
+  }
+
+  private async query() {
+    try {
+      this.loading = true
+      const params: any = {
+        ...this.searchForm,
+        page: this.pageInfo.page - 1,
+        num: this.pageInfo.num,
+        class_no: this.selectedKeys[0]
+      }
+
+      const { data, all_page } = await querySpecimenList(params)
+
+      this.specimenLists = [...data]
+      this.pageInfo.all_page = all_page
+    } catch (e) {
+      console.warn(e)
+    } finally {
+      this.loading = false
+    }
+  }
+
+  private handleSelectedKeysChange(selectedKeys: string[]) {
+    this.selectedKeys = selectedKeys
+    this.query()
+  }
+
+  private handleSourceNameClick({ specimen_number }: ISpecimen) {
+    this.$router.push({
+      path: '/specimen-search/union-search-detail',
+      query: { specimen_number }
+    })
   }
 }
 </script>
@@ -117,8 +195,9 @@ export default class SpecimenList extends Vue {
 
 .specimen-list {
   display: flex;
+  min-height: 800px;
   .left-wrapper {
-    width: 240px;
+    width: 300px;
     min-height: 100px;
     border: 1px solid #e5e5e5;
     border-radius: 4px;

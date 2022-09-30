@@ -7,8 +7,7 @@
         fit="cover"
         :src="require('@/assets/images/logo.jpg')"
       ></el-image>
-      <!--      湖北地质博物馆标本资源库-->
-      <div class="header-text">这是一个测试文案</div>
+      <div class="header-text">湖北地质博物馆标本资源库</div>
     </div>
     <div class="nav-wrapper">
       <layout-nav></layout-nav>

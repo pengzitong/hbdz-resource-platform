@@ -52,44 +52,53 @@ const routes: Array<RouteConfig> = [
     path: '/specimen-search',
     component: Layout,
     meta: { title: '标本查询' },
-    redirect: '/specimen-search/specimen-list-kw',
+    redirect: '/specimen-search/specimen-list?metaTitle=矿物标本查询&specimen_type=矿物',
     children: [
       {
-        path: '/specimen-search/specimen-list-kw',
+        path: '/specimen-search/specimen-list',
         component: () =>
           import(
             /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
           ),
-        name: 'kwSpecimenList',
-        meta: { title: '矿物标本查询' }
+        name: 'specimenList',
+        meta: { title: '' }
       },
-      {
-        path: '/specimen-search/specimen-list-ys',
-        component: () =>
-          import(
-            /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
-          ),
-        name: 'ysSpecimenList',
-        meta: { title: '岩石标本查询' }
-      },
-      {
-        path: '/specimen-search/specimen-list-ks',
-        component: () =>
-          import(
-            /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
-          ),
-        name: 'ksSpecimenList',
-        meta: { title: '矿石标本查询' }
-      },
-      {
-        path: '/specimen-search/specimen-list-hs',
-        component: () =>
-          import(
-            /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
-          ),
-        name: 'hsSpecimenList',
-        meta: { title: '化石标本查询' }
-      },
+      // {
+      //   path: '/specimen-search/specimen-list-kw',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
+      //     ),
+      //   name: 'kwSpecimenList',
+      //   meta: { title: '矿物标本查询' }
+      // },
+      // {
+      //   path: '/specimen-search/specimen-list-ys',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
+      //     ),
+      //   name: 'ysSpecimenList',
+      //   meta: { title: '岩石标本查询' }
+      // },
+      // {
+      //   path: '/specimen-search/specimen-list-ks',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
+      //     ),
+      //   name: 'ksSpecimenList',
+      //   meta: { title: '矿石标本查询' }
+      // },
+      // {
+      //   path: '/specimen-search/specimen-list-hs',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "specimen-list" */ '@/views/specimen-search/specimen-list.vue'
+      //     ),
+      //   name: 'hsSpecimenList',
+      //   meta: { title: '化石标本查询' }
+      // },
       {
         path: '/specimen-search/specimen-images',
         component: () =>
@@ -165,7 +174,7 @@ const routes: Array<RouteConfig> = [
     path: '/photo-gallery',
     component: Layout,
     meta: { title: '精品图片库' },
-    redirect: '/photo-gallery/mineral-products',
+    redirect: '/photo-gallery/mineral-products?gallery_id=2',
     children: [
       {
         path: '/photo-gallery/mineral-products',
@@ -176,33 +185,43 @@ const routes: Array<RouteConfig> = [
         name: 'mineralProducts',
         meta: { title: '矿物精品' }
       },
+      // 废弃
       {
-        path: '/photo-gallery/other-products-ys',
+        path: '/photo-gallery/other-products',
         component: () =>
           import(
             /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
           ),
-        name: 'ysProducrts',
-        meta: { title: '岩石精品' }
-      },
-      {
-        path: '/photo-gallery/other-products-ks',
-        component: () =>
-          import(
-            /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
-          ),
-        name: 'ksProducrts',
-        meta: { title: '矿石精品' }
-      },
-      {
-        path: '/photo-gallery/other-products-hs',
-        component: () =>
-          import(
-            /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
-          ),
-        name: 'hsProducrts',
-        meta: { title: '化石精品' }
+        name: 'otherProducts',
+        meta: { title: '' }
       }
+      // {
+      //   path: '/photo-gallery/other-products-ys',
+      //   component: () =>
+      //       import(
+      //           /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
+      //           ),
+      //   name: 'ysProducrts',
+      //   meta: { title: '岩石精品' }
+      // },
+      // {
+      //   path: '/photo-gallery/other-products-ks',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
+      //     ),
+      //   name: 'ksProducrts',
+      //   meta: { title: '矿石精品' }
+      // },
+      // {
+      //   path: '/photo-gallery/other-products-hs',
+      //   component: () =>
+      //     import(
+      //       /* webpackChunkName: "other-products" */ '@/views/photo-gallery/other-products.vue'
+      //     ),
+      //   name: 'hsProducrts',
+      //   meta: { title: '化石精品' }
+      // }
     ]
   },
   // 管理端路由
