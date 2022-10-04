@@ -42,6 +42,7 @@ export default class Breadcrumb extends Vue {
     if (!this.isHome(first) && !this.isDashboard(first)) {
       const name = first && first.name
 
+      // todo list 增加路由判断
       const managePlatformRoutesName = [
         'SpecimenManagement',
         'PhotoManagement',

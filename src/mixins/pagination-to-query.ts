@@ -6,7 +6,7 @@ export default class PaginationToQuery extends Mixins() {
   loading = false
   pageInfo = {
     page: 1,
-    num: 5,
+    num: 20,
     all_page: 0
   }
 

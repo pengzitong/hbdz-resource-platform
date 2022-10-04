@@ -1,14 +1,17 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 import Vue from 'vue'
+import router from '@/router'
 const service = axios.create({
   baseURL: process.env.VUE_APP_API_ENV === 'development' ? process.env.VUE_APP_API_URL : '/',
   timeout: 8000
 })
 
 service.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (config.headers) {
-    // config.headers['Authorization'] =
-    //   'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJhZG1pbiIsImp0aSI6IjgwZjhmOGFlMDUwZjRhYTZhMDEyY2Y3ZTZiZGM1MjVkIn0.jzeeb0jQafVBQq56KOhoW7pGYcmotkR-fmR3yffFuZqbYQ1a0rm7NVwQdUXcF1hNQRSFcsWI2ACkmI3sTDIbbQ'
+  const authorization = localStorage.getItem('authorization')
+  if (!authorization) {
+    router.push('/login')
+  } else if (config.headers) {
+    config.headers['Authorization'] = authorization
   }
   return config
 })
@@ -26,7 +29,14 @@ service.interceptors.response.use(
     }
   },
   error => {
-    Vue.prototype.$message.error(error || '系统异常')
+    console.log(error.response, 'error response')
+    const { response } = error
+    if (response.status == 401) {
+      Vue.prototype.$message.warning('登录状态已过期，请重新登录')
+      router.push('/login')
+    } else {
+      Vue.prototype.$message.error(response.data.error || '系统异常')
+    }
     return Promise.reject('error')
   }
 )

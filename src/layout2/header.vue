@@ -16,6 +16,7 @@
 import { Vue, Component } from 'vue-property-decorator'
 import Breadcrumb from '@/components/breadcrumb.vue'
 import { confirm } from '@/utils/decorator'
+import { logout } from '@/api/admin'
 
 @Component({ components: { Breadcrumb } })
 export default class Header extends Vue {
@@ -26,12 +27,12 @@ export default class Header extends Vue {
   private handleCollapseClick() {
     const status = this.sidebarStatus === 'opened' ? 'closed' : 'opened'
     this.$store.commit('setSidebarStatus', status)
-    console.log('handleCollapseClick')
   }
 
-  @confirm('确定要退出登录吗？', '提示')
-  private handleLogout() {
-    console.log('logout')
+  @confirm('确定要注销并退出系统吗？', '提示')
+  private async handleLogout() {
+    await logout()
+    this.$router.push('/login')
   }
 }
 </script>

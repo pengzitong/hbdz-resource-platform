@@ -2,16 +2,28 @@
   <div class="specimen-images">
     <el-form class="search-form" inline>
       <el-form-item label="平台资源号">
-        <el-input size="small" v-model="searchForm.platform_resource_number"></el-input>
+        <el-input
+          size="small"
+          v-model="searchForm.platform_resource_number"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="资源中外文名">
-        <el-input size="small" v-model="searchForm.resource_name"></el-input>
+        <el-input
+          size="small"
+          v-model="searchForm.resource_name"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="类别">
-        <el-input size="small" v-model="searchForm.specimen_type"></el-input>
+        <el-input
+          size="small"
+          v-model="searchForm.specimen_type"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label=" ">
-        <el-button type="primary" size="small">查询</el-button>
+        <el-button type="primary" size="small" @click="query">查询</el-button>
       </el-form-item>
     </el-form>
 

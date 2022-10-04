@@ -66,7 +66,7 @@
         <tr>
           <td>
             <el-form-item class="td-form-item" label="标本编号：">
-              <el-input v-model="form.platFormSourceNo" size="small"></el-input>
+              <el-input v-model="form.specimen_number" size="small"></el-input>
             </el-form-item>
           </td>
           <td>

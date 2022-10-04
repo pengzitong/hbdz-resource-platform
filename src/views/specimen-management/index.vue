@@ -1,61 +1,104 @@
 <template>
   <div class="specimen-management-container">
     <div class="search-form">
-      <el-tabs :tab-position="tabPosition">
-        <el-tab-pane label="简单查询">
-          <el-form inline label-width="120px">
-            <el-form-item label="资源中文名称：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源外文名称：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="产地：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="综合查询">
-          <el-form inline label-width="120px">
-            <el-form-item label="平台资源号：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源编号：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源中文名称：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源外文名称：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="产地：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="省：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="国家：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="保存位置：">
-              <el-input v-model="query.savePosition" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源提供者：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="资源形成时代：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="标本编号：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-            <el-form-item label="库存号位置：">
-              <el-input v-model="query.sourceName" size="small" placeholder="请输入"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-      </el-tabs>
+      <el-form inline label-width="120px">
+        <el-form-item label="平台资源号：">
+          <el-input
+            v-model="searchForm.platform_resource_number"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="资源编号：">
+          <el-input
+            v-model="searchForm.resource_number"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="资源中文名称：">
+          <el-input
+            v-model="searchForm.resource_cn_name"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="资源外文名称：">
+          <el-input
+            v-model="searchForm.resource_en_name"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="产地：">
+          <el-input
+            v-model="searchForm.origin"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="省：">
+          <el-input
+            v-model="searchForm.province"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="国家：">
+          <el-input
+            v-model="searchForm.country"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="保存位置：">
+          <el-input
+            v-model="searchForm.save_unit"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="资源提供者：">
+          <el-input
+            v-model="searchForm.provider"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="资源形成时代：">
+          <el-input
+            v-model="searchForm.formative_era"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="标本编号：">
+          <el-input
+            v-model="searchForm.specimen_number"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="库存号位置：">
+          <el-input
+            v-model="searchForm.sourceNo"
+            size="small"
+            placeholder="请输入"
+            @keyup.enter.native="query"
+          ></el-input>
+        </el-form-item>
+      </el-form>
     </div>
 
     <div class="button-group" style="text-align: right; margin: 0 20px 20px 0">
@@ -64,13 +107,25 @@
     </div>
 
     <div class="button-group">
-      <el-button icon="el-icon-plus" type="primary" size="small" @click="handleAdd">
+      <el-button v-if="false" icon="el-icon-plus" type="primary" size="small" @click="handleAdd">
         新增标本
       </el-button>
 
       <!--      <el-button icon="el-icon-upload2" type="primary" size="small" @click="handleQuery">-->
       <!--        批量上传-->
       <!--      </el-button>-->
+      <el-upload
+        style="display: inline-block"
+        action=""
+        :show-file-list="false"
+        :auto-upload="false"
+        :on-change="handleImageFileChange"
+        multiple
+      >
+        <el-button :loading="imageUploadLoading" icon="el-icon-upload2" type="primary" size="small">
+          批量上传图片
+        </el-button>
+      </el-upload>
 
       <el-upload
         style="display: inline-block; margin: 0 10px"
@@ -80,117 +135,254 @@
         :on-change="handleFileChange"
         multiple
       >
-        <el-button icon="el-icon-upload2" type="primary" size="small">批量上传</el-button>
+        <el-button :loading="uploadLoading" icon="el-icon-upload2" type="primary" size="small">
+          批量上传标本
+        </el-button>
         <!--        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
       </el-upload>
-      <el-button icon="el-icon-download" type="warning" size="small" @click="handleQuery">
+
+      <el-button
+        :loading="downloadLoading"
+        icon="el-icon-download"
+        type="warning"
+        size="small"
+        @click="handleDownload"
+      >
         下载
       </el-button>
     </div>
 
     <div class="table-wrapper">
-      <el-table class="mt-12" border :data="tableData" stripe>
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="资源名称" width="180">
+      <el-table class="mt-12" border :data="specimenLists" stripe>
+        <el-table-column
+          prop="platform_resource_number"
+          show-overflow-tooltip
+          label="平台资源号"
+          width="100"
+        ></el-table-column>
+        <el-table-column prop="resource_name" show-overflow-tooltip label="资源名称">
           <template slot-scope="scope">
-            <el-link type="primary" style="font-weight: 400">
-              {{ scope.row.name2 }}
+            <el-link type="primary" style="font-weight: 400" @click="handleView(scope.row)">
+              {{ scope.row.resource_name }}
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="name" label="操作" width="180">
-          <template>
-            <el-button type="text" size="small" @click="handleView">查看</el-button>
-            <el-button type="text" size="small" @click="handleEdit">编辑</el-button>
-            <el-button type="text" size="small" @click="handleDelete">删除</el-button>
+        <el-table-column prop="foreign_language_name" show-overflow-tooltip label="资源外文名" />
+        <el-table-column prop="complete_origin" show-overflow-tooltip label="产地" />
+        <el-table-column prop="collation_name" show-overflow-tooltip width="100" label="资源归类" />
+        <el-table-column
+          prop="stock_location"
+          show-overflow-tooltip
+          width="100"
+          label="库存位置号"
+        />
+        <el-table-column
+          prop="specimen_number"
+          show-overflow-tooltip
+          width="100"
+          label="标本编号"
+        />
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button
+              :loading="textButtonLoading"
+              type="text"
+              size="small"
+              @click="handleView(scope.row)"
+            >
+              查看
+            </el-button>
+            <el-button
+              v-if="false"
+              :loading="textButtonLoading"
+              type="text"
+              size="small"
+              @click="handleEdit(scope.row)"
+            >
+              编辑
+            </el-button>
+            <el-button
+              :loading="textButtonLoading"
+              type="text"
+              size="small"
+              @click="handleDelete(scope.row)"
+            >
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <pagination />
+      <pagination
+        @currentChange="handleCurrentChange"
+        @sizeChange="handleSizeChange"
+        :current-page.sync="pageInfo.page"
+        :page-size.sync="pageInfo.num"
+        :page-count="pageInfo.all_page"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import Pagination from '@/components/pagination.vue'
 import { confirm } from '@/utils/decorator'
+import PaginationToQuery from '@/mixins/pagination-to-query'
+import { ISpecimen } from '@/models'
+import { querySpecimenList } from '@/api/specimen'
+import { deleteSpecimen, exportExcel, importExcelPost, importImagesPost } from '@/api/admin'
+import { downloadFile } from '@/utils/common'
+import { readFile } from '@/utils/readfile'
 
 @Component({ components: { Pagination } })
-export default class SpecimenManagement extends Vue {
-  private query = {
-    sourceName: '',
-    savePosition: ''
+export default class SpecimenManagement extends Mixins(PaginationToQuery) {
+  pageInfo = {
+    page: 1,
+    num: 10,
+    all_page: 0
   }
 
-  private tabPosition = 'top'
+  private searchForm: any = {}
 
-  private tableData = [
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1517 弄'
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      name2: '王小虎',
-      address: '上海市普陀区金沙江路 1519 弄'
-    },
-    {
-      date: '2016-05-03',
-      name2: '王小虎',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1516 弄'
+  private uploadLoading = false
+  private imageUploadLoading = false
+  private downloadLoading = false
+  private textButtonLoading = false
+
+  private specimenLists: ISpecimen[] = []
+
+  private mounted() {
+    this.query()
+  }
+
+  private async query() {
+    try {
+      this.loading = true
+      const params: any = {
+        ...this.searchForm,
+        page: this.pageInfo.page - 1,
+        num: this.pageInfo.num
+      }
+
+      const { data, all_page } = await querySpecimenList(params)
+
+      this.specimenLists = [...data]
+      this.pageInfo.all_page = all_page
+    } catch (e) {
+      console.warn(e)
+    } finally {
+      this.loading = false
     }
-  ]
+  }
 
-  private doUpload() {
-    // todo 上传文件给服务器并刷新列表
-    console.log('upload')
+  private doImageUpload(file: any) {
+    const callback = async (data: any) => {
+      try {
+        this.imageUploadLoading = true
+        await importImagesPost(data)
+        this.$message.success(`导入成功`)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.imageUploadLoading = false
+      }
+    }
+    readFile(file.raw, callback)
+  }
+
+  private doUpload(file: any) {
+    const callback = async (data: any) => {
+      try {
+        this.uploadLoading = true
+        const { success_num, fail_num, url } = await importExcelPost(data)
+        this.$message.success(`导入结果：成功${success_num}条,失败${fail_num}条`)
+        if (url) {
+          downloadFile(url)
+        }
+        this.query()
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.uploadLoading = false
+      }
+    }
+    readFile(file.raw, callback)
   }
 
   private handleFileChange(file: any) {
     const fileExt = file.name.replace(/.+\./, '')
-    if (['zip', 'rar', 'gz'].indexOf(fileExt.toLowerCase()) === -1) {
-      this.$message.error('格式不符合要求，请上传zip、rar、gz格式的压缩包')
+    if (['xlsx', 'xls'].indexOf(fileExt.toLowerCase()) === -1) {
+      this.$message.error('格式不符合要求，请上传.xlsx、.xls格式的文件')
       return
     }
-    this.doUpload()
+    this.doUpload(file)
   }
 
+  private handleImageFileChange(file: any) {
+    const fileExt = file.name.replace(/.+\./, '')
+    if (['zip'].indexOf(fileExt.toLowerCase()) === -1) {
+      this.$message.error('格式不符合要求，请上传.zip格式的文件')
+      return
+    }
+    this.doImageUpload(file)
+  }
+
+  private async handleDownload() {
+    try {
+      this.downloadLoading = true
+      const params = {
+        page: this.pageInfo.page,
+        num: this.pageInfo.num,
+        ...this.searchForm
+      }
+      const { url } = await exportExcel(params)
+      console.log(url, 'url')
+      downloadFile(url)
+      this.$message.success('下载成功')
+    } catch (e) {
+      console.warn(e, 'handleDownload')
+    } finally {
+      this.downloadLoading = false
+    }
+  }
   private handleQuery() {
-    console.log(this.query, 'query')
+    this.pageInfo.page = 1
+    this.query()
   }
 
   private handleReset() {
-    console.log('reset')
+    this.searchForm = {}
+    this.handleQuery()
   }
 
   private handleAdd() {
-    this.$router.push('/specimen-management/detail?metaTitle=新增标本')
+    this.$router.push(`/specimen-management/ud-detail?metaTitle=新增标本`)
   }
 
-  private handleView() {
-    this.$router.push('/specimen-management/detail?metaTitle=标本详情')
+  private handleView({ specimen_number }: any) {
+    this.$router.push(
+      `/specimen-management/detail?metaTitle=标本详情&specimen_number=${specimen_number}`
+    )
   }
 
-  private handleEdit() {
-    this.$router.push('/specimen-management/detail?metaTitle=编辑标本')
+  private handleEdit({ specimen_number }: any) {
+    this.$router.push(
+      `/specimen-management/ud-detail?metaTitle=编辑标本&specimen_number=${specimen_number}`
+    )
   }
 
-  @confirm()
-  private handleDelete() {
-    console.log('delete')
+  @confirm('确认要删除此标本吗？')
+  private async handleDelete({ specimen_number }: any) {
+    try {
+      this.textButtonLoading = true
+      await deleteSpecimen(specimen_number)
+      this.$message.success('删除成功')
+      this.handleQuery()
+    } catch (e) {
+      console.log(e, 'handleDelete')
+    } finally {
+      this.textButtonLoading = false
+    }
   }
 }
 </script>

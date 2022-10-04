@@ -14,6 +14,7 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off', //关闭any警告
     '@typescript-eslint/no-extra-semi': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
 
     curly: [2, 'multi-line'], // 允许使用不带大括号的单行if、else if、else、for、while或do，同时仍然强制对其他实例使用大括号。
     eqeqeq: [0, 'always'], // 强制使用===和！==在任何情况下

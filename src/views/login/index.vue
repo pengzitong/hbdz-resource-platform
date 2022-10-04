@@ -72,6 +72,7 @@ import { Route } from 'vue-router'
 import { Dictionary } from 'vue-router/types/router'
 import { Form as ElForm, Input } from 'element-ui'
 import { isValidUsername } from '@/utils/validate'
+import { login } from '@/api/admin'
 
 @Component({
   name: 'Login',
@@ -95,8 +96,8 @@ export default class extends Vue {
   }
 
   private loginForm = {
-    username: 'admin',
-    password: '111111'
+    username: 'panso',
+    password: 'panso123'
   }
 
   private loginRules = {
@@ -149,19 +150,21 @@ export default class extends Vue {
     ;(this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         this.loading = true
-        // todo await UserModule.Login(this.loginForm)
-        this.$router
-          .push({
+        try {
+          const { Authorization } = await login({
+            account_name: this.loginForm.username,
+            password: this.loginForm.password
+          })
+          localStorage.setItem('authorization', Authorization)
+          this.$router.push({
             path: '/dashboard',
             query: this.otherQuery
           })
-          .catch(err => {
-            console.warn(err)
-          })
-        // Just to simulate the time of the request
-        setTimeout(() => {
+        } catch (e) {
+          console.warn(e, 'login')
+        } finally {
           this.loading = false
-        }, 0.5 * 1000)
+        }
       } else {
         return false
       }

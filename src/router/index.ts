@@ -267,6 +267,15 @@ const routes: Array<RouteConfig> = [
           ),
         name: 'SpecimenManagementDetail',
         meta: { title: '标本详情' }
+      },
+      {
+        path: '/specimen-management/ud-detail',
+        component: () =>
+          import(
+            /* webpackChunkName: "specimen-management-detail" */ '@/views/specimen-management/ud-detail.vue'
+          ),
+        name: 'SpecimenManagementUDDetail',
+        meta: { title: '标本详情' }
       }
     ]
   },
