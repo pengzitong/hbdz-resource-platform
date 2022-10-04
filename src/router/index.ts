@@ -321,11 +321,27 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  // 管理端路由
+  const whiteList = [
+    'SpecimenManagement',
+    'PhotoManagement',
+    'SpecimenManagementDetail',
+    'PhotoManagementDetail',
+    'Dashboard'
+  ]
   if (to.meta && to.query.metaTitle) {
     to.meta.title = to.query.metaTitle
   }
   if (to.meta?.title) {
     document.title = to.meta.title
+  }
+  // 如果token不存在
+  if (!localStorage.getItem('authorization')) {
+    if (!whiteList.includes(to.name as string)) {
+      next()
+    } else {
+      next('/login')
+    }
   }
   next()
 })

@@ -7,10 +7,11 @@ const service = axios.create({
 })
 
 service.interceptors.request.use((config: AxiosRequestConfig) => {
-  const authorization = localStorage.getItem('authorization')
-  if (!authorization) {
-    router.push('/login')
-  } else if (config.headers) {
+  const authorization = localStorage.getItem('authorization') || ''
+  // if (!authorization) {  // 在路由拦截中通过白名单区分是否为admin
+  //   router.push('/login')
+  // }
+  if (config.headers) {
     config.headers['Authorization'] = authorization
   }
   return config

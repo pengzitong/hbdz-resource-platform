@@ -123,7 +123,7 @@ export default class SpecimenImages extends Mixins(PaginationToQuery) {
   .specimen-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 }
 </style>
