@@ -16,11 +16,14 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="类别">
-        <el-input
-          size="small"
-          v-model="searchForm.specimen_type"
-          @keyup.enter.native="query"
-        ></el-input>
+        <el-select size="small" @change="query" v-model="searchForm.specimen_type">
+          <el-option
+            v-for="(item, index) in specimen_type_list"
+            :label="item.label"
+            :value="item.value"
+            :key="index"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label=" ">
         <el-button type="primary" size="small" @click="query">查询</el-button>
@@ -74,8 +77,16 @@ export default class SpecimenImages extends Mixins(PaginationToQuery) {
   private searchForm: any = {
     platform_resource_number: undefined,
     resource_name: undefined,
-    specimen_type: undefined
+    specimen_type: ''
   }
+
+  private specimen_type_list = [
+    { label: '--全部--', value: '' },
+    { label: '矿物标本', value: '矿物' },
+    { label: '岩石标本', value: '岩石' },
+    { label: '矿石标本', value: '矿石' },
+    { label: '化石标本', value: '化石' }
+  ]
 
   private specimenImageLists: ISpecimenImage[] = []
 

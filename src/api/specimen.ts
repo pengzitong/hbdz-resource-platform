@@ -16,3 +16,7 @@ export const querySpecimenClassification = () => {
 export const querySpecimenImageList = (params: any) => {
   return request.get(`/public_api/specimen/image/search?${qs.stringify(params)}`)
 }
+
+export const querySelectLists = () => {
+  return request.get(`/public_api/specimen/search/config`)
+}

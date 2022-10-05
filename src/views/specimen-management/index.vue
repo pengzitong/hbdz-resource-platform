@@ -43,12 +43,21 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="省：">
-          <el-input
-            v-model="searchForm.province"
+          <el-select
+            style="width: 168px"
+            clearable
+            placeholder="--请选择--"
             size="small"
-            placeholder="请输入"
-            @keyup.enter.native="query"
-          ></el-input>
+            @change="query"
+            v-model="searchForm.province"
+          >
+            <el-option
+              v-for="(item, index) in china_province_list"
+              :label="item"
+              :value="item"
+              :key="index"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="国家：">
           <el-input
@@ -58,13 +67,22 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-        <el-form-item label="保存位置：">
-          <el-input
-            v-model="searchForm.save_unit"
+        <el-form-item label="保存单位：">
+          <el-select
+            style="width: 168px"
+            clearable
+            placeholder="--请选择--"
             size="small"
-            placeholder="请输入"
-            @keyup.enter.native="query"
-          ></el-input>
+            @change="query"
+            v-model="searchForm.save_unit"
+          >
+            <el-option
+              v-for="(item, index) in save_unit_list"
+              :label="item"
+              :value="item"
+              :key="index"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="资源提供者：">
           <el-input
@@ -153,7 +171,7 @@
     </div>
 
     <div class="table-wrapper">
-      <el-table class="mt-12" border :data="specimenLists" stripe>
+      <el-table v-loading="loading" class="mt-12" border :data="specimenLists" stripe>
         <el-table-column
           prop="platform_resource_number"
           show-overflow-tooltip
@@ -233,9 +251,10 @@ import { querySpecimenList } from '@/api/specimen'
 import { deleteSpecimen, exportExcel, importExcelPost, importImagesPost } from '@/api/admin'
 import { downloadFile } from '@/utils/common'
 import { readFile } from '@/utils/readfile'
+import QuerySelectLists from '@/mixins/querySelectLists'
 
 @Component({ components: { Pagination } })
-export default class SpecimenManagement extends Mixins(PaginationToQuery) {
+export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, QuerySelectLists) {
   pageInfo = {
     page: 1,
     num: 10,
@@ -257,7 +276,7 @@ export default class SpecimenManagement extends Mixins(PaginationToQuery) {
 
   private async query() {
     try {
-      this.loading = true
+      ;(this as any).loading = true
       const params: any = {
         ...this.searchForm,
         page: this.pageInfo.page - 1,
@@ -271,7 +290,7 @@ export default class SpecimenManagement extends Mixins(PaginationToQuery) {
     } catch (e) {
       console.warn(e)
     } finally {
-      this.loading = false
+      ;(this as any).loading = false
     }
   }
 

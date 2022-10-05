@@ -32,7 +32,7 @@
           <span>
             {{ item.left.label }}：
             <span style="color: red" v-if="item.left.optional">（可选项）</span>
-            {{ tag_information[item.left.field] }}
+            {{ tag_information[item.left.field] }} {{ tag_information[item.left.field2] }}
           </span>
         </td>
         <td v-if="item.right">
@@ -113,7 +113,10 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2">地址记录：{{ location_url }}</td>
+        <td colspan="2">
+          地址记录：
+          <el-link :href="location_url" target="_blank" type="primary">{{ location_url }}</el-link>
+        </td>
       </tr>
       <!--收藏单位信息-->
       <tr>
@@ -212,7 +215,7 @@ export default class SpecimenDetail extends Vue {
   ]
   private data_fields_tag_information = [
     {
-      left: { field: 'collation_code', label: '资源归类编码' },
+      left: { field: 'collation_code', field2: 'collation_name', label: '资源归类编码' },
       right: { field: 'main_use', label: '主要用途' }
     },
     {

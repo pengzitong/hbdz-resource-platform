@@ -9,21 +9,33 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="保存单位">
-        <el-input
-          v-model="searchForm.save_unit"
+        <el-select
+          clearable
+          placeholder="--请选择--"
           size="small"
-          @keyup.enter.native="query"
-        ></el-input>
+          @change="query"
+          v-model="searchForm.save_unit"
+        >
+          <el-option
+            v-for="(item, index) in save_unit_list"
+            :label="item"
+            :value="item"
+            :key="index"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="产地">
         <el-input v-model="searchForm.origin" size="small" @keyup.enter.native="query"></el-input>
       </el-form-item>
       <el-form-item label="类别">
-        <el-input
-          v-model="searchForm.specimen_type"
-          size="small"
-          @keyup.enter.native="query"
-        ></el-input>
+        <el-select size="small" @change="query" v-model="searchForm.specimen_type">
+          <el-option
+            v-for="(item, index) in specimen_type_list"
+            :label="item.label"
+            :value="item.value"
+            :key="index"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label=" ">
         <el-button type="primary" size="small" @click="query">查询</el-button>
@@ -73,20 +85,29 @@ import Pagination from '@/components/pagination.vue'
 import { querySpecimenList } from '@/api/specimen'
 import { ISpecimen } from '@/models'
 import PaginationToQuery from '@/mixins/pagination-to-query'
+import QuerySelectLists from '@/mixins/querySelectLists'
 
 @Component({
   components: {
     Pagination
   }
 })
-export default class UnionSearchList extends Mixins(PaginationToQuery) {
+export default class UnionSearchList extends Mixins<any>(PaginationToQuery, QuerySelectLists) {
   private searchForm = {
     resource_name: undefined,
     resource_cn_name: undefined,
     save_unit: undefined,
     origin: undefined,
-    specimen_type: undefined
+    specimen_type: ''
   }
+
+  private specimen_type_list = [
+    { label: '--全部--', value: '' },
+    { label: '矿物标本', value: '矿物' },
+    { label: '岩石标本', value: '岩石' },
+    { label: '矿石标本', value: '矿石' },
+    { label: '化石标本', value: '化石' }
+  ]
 
   private specimenLists: ISpecimen[] = []
 
@@ -102,31 +123,37 @@ export default class UnionSearchList extends Mixins(PaginationToQuery) {
 
   private async query() {
     try {
-      this.loading = true
-      const params: any = {
+      ;(this as any).loading = true
+      let params: any = {
         ...this.searchForm,
-        page: this.pageInfo.page - 1,
-        num: this.pageInfo.num
+        page: (this as any).pageInfo.page - 1,
+        num: (this as any).pageInfo.num
       }
       const { resource_cn_name, resource_en_name }: any = this.$store.state.cacheQuery
-      // 仅使用一次即清空store，否则用户在手动修改查询条件下此处判断会有冲突
-      this.$store.commit('setCacheQuery', {})
 
       if (resource_cn_name || resource_en_name) {
         // 如果外部携带了字段过来，优先按外层的条件查
-        params.resource_name = undefined
-        params.resource_cn_name = resource_cn_name
-        params.resource_en_name = resource_en_name
+        params.resource_name = ''
+        params.resource_cn_name = resource_cn_name || ''
+        params.resource_en_name = resource_en_name || ''
       }
+
+      params = {
+        ...this.$store.state.cacheQuery,
+        ...params
+      }
+
+      // 仅使用一次即清空store，否则用户在手动修改查询条件下此处判断会有冲突
+      this.$store.commit('setCacheQuery', {})
 
       const { data, all_page } = await querySpecimenList(params)
 
       this.specimenLists = [...data]
-      this.pageInfo.all_page = all_page
+      ;(this as any).pageInfo.all_page = all_page
     } catch (e) {
       console.warn(e)
     } finally {
-      this.loading = false
+      ;(this as any).loading = false
     }
   }
 

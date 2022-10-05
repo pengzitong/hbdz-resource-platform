@@ -34,7 +34,20 @@
           </td>
           <td>
             <el-form-item class="td-form-item" label="省：">
-              <el-input v-model="form.province" size="small"></el-input>
+              <el-select
+                style="width: 168px"
+                clearable
+                placeholder="--请选择--"
+                size="small"
+                v-model="form.province"
+              >
+                <el-option
+                  v-for="(item, index) in china_province_list"
+                  :label="item"
+                  :value="item"
+                  :key="index"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </td>
         </tr>
@@ -46,7 +59,20 @@
           </td>
           <td>
             <el-form-item class="td-form-item" label="保存单位：">
-              <el-input v-model="form.save_unit" size="small"></el-input>
+              <el-select
+                style="width: 168px"
+                clearable
+                placeholder="--请选择--"
+                size="small"
+                v-model="form.save_unit"
+              >
+                <el-option
+                  v-for="(item, index) in save_unit_list"
+                  :label="item"
+                  :value="item"
+                  :key="index"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </td>
         </tr>
@@ -85,9 +111,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import QuerySelectLists from '@/mixins/querySelectLists'
 @Component
-export default class UnionSearch extends Vue {
+export default class UnionSearch extends Mixins(QuerySelectLists) {
   private form: any = {}
 
   private handleSearch() {

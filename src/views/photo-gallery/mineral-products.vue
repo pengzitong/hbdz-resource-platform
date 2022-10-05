@@ -51,7 +51,10 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
 import StaticSlider from '@/components/static-slider.vue'
 import ImageShow from '@/components/image-show.vue'
 import LoadMore from '@/mixins/load-more'
-import { queryPhotoGalleryList, queryPhotoGallerySummary } from '@/api/photo-gallery'
+import {
+  queryPhotoGalleryList
+  // queryPhotoGallerySummary
+} from '@/api/photo-gallery'
 import { IMineralProduct } from '@/models'
 
 @Component({
@@ -93,7 +96,7 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
 
   private mounted() {
     // 加载类别
-    this.queryPhotoGallerySummary()
+    // this.queryPhotoGallerySummary()
     this.init()
 
     window.onbeforeunload = () => {
@@ -113,19 +116,19 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
     this.query()
   }
 
-  private async queryPhotoGallerySummary() {
-    try {
-      const { gallery_id }: any = this.$route.query
-      this.photoGallerySummary = await queryPhotoGallerySummary(gallery_id)
-    } catch (e) {
-      console.log(e, 'queryPhotoGallerySummary')
-    }
-  }
+  // private async queryPhotoGallerySummary() {
+  //   try {
+  //     const { gallery_id }: any = this.$route.query
+  //     this.photoGallerySummary = await queryPhotoGallerySummary(gallery_id)
+  //   } catch (e) {
+  //     console.log(e, 'queryPhotoGallerySummary')
+  //   }
+  // }
 
   private handleCategoryChange({ category_name }: any) {
     this.activeCategory = category_name
 
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
     // do init
     this.init()
   }
@@ -155,6 +158,8 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
     this.listLoading = true
     const id = ++this.requestId
     const res: any = await queryPhotoGalleryList(params)
+    const { category_info, banners } = res
+    this.photoGallerySummary = { category_info, banners }
     if (id !== this.requestId) return
     if (flag) {
       // 下一页
@@ -163,7 +168,7 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
       // 初次加载
       this.pageData = res.data || []
     }
-    this.finished = this.pageInfo.page >= res.all_page
+    this.finished = this.pageInfo.page >= res.all_page - 1 // 后端分页从0页开始，所以要减1
     this.listLoading = false
   }
 
@@ -187,8 +192,12 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
       .search-radio {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         &-item {
-          flex: 1;
+          /*flex: 1;*/
+          flex-grow: 1;
+          padding: 0 20px;
+          text-align: center;
           color: #333;
           cursor: pointer;
           &.active {
@@ -200,6 +209,7 @@ export default class MineralProducts extends Mixins<any>(LoadMore) {
     }
   }
   .mineral-products-wrapper {
+    min-height: 200px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

@@ -24,11 +24,20 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="保存单位">
-          <el-input
-            v-model="searchForm.save_unit"
+          <el-select
+            clearable
+            placeholder="--请选择--"
             size="small"
-            @keyup.enter.native="query"
-          ></el-input>
+            @change="query"
+            v-model="searchForm.save_unit"
+          >
+            <el-option
+              v-for="(item, index) in save_unit_list"
+              :label="item"
+              :value="item"
+              :key="index"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="产地">
           <el-input
@@ -99,6 +108,7 @@ import Pagination from '@/components/pagination.vue'
 import { querySpecimenClassification, querySpecimenList } from '@/api/specimen'
 import { ISpecimen } from '@/models'
 import PaginationToQuery from '@/mixins/pagination-to-query'
+import QuerySelectLists from '@/mixins/querySelectLists'
 @Component({
   components: {
     AntTree,
@@ -106,7 +116,7 @@ import PaginationToQuery from '@/mixins/pagination-to-query'
     Pagination
   }
 })
-export default class SpecimenList extends Mixins(PaginationToQuery) {
+export default class SpecimenList extends Mixins<any>(PaginationToQuery, QuerySelectLists) {
   private selectedKeys: string[] = []
 
   private searchForm: any = {
@@ -142,7 +152,7 @@ export default class SpecimenList extends Mixins(PaginationToQuery) {
     this.searchForm = {}
     this.selectedKeys = []
     this.treeData = []
-    this.pageInfo.page = 1
+    ;(this as any).pageInfo.page = 1
   }
 
   private async querySpecimenClassification() {
@@ -157,22 +167,22 @@ export default class SpecimenList extends Mixins(PaginationToQuery) {
 
   private async query() {
     try {
-      this.loading = true
+      ;(this as any).loading = true
       const params: any = {
         ...this.searchForm,
-        page: this.pageInfo.page - 1,
-        num: this.pageInfo.num,
-        class_no: this.selectedKeys[0]
+        page: (this as any).pageInfo.page - 1,
+        num: (this as any).pageInfo.num,
+        class_no: (this as any).selectedKeys[0]
       }
 
       const { data, all_page } = await querySpecimenList(params)
 
       this.specimenLists = [...data]
-      this.pageInfo.all_page = all_page
+      ;(this as any).pageInfo.all_page = all_page
     } catch (e) {
       console.warn(e)
     } finally {
-      this.loading = false
+      ;(this as any).loading = false
     }
   }
 
