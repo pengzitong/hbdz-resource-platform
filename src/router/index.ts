@@ -326,6 +326,7 @@ router.beforeEach((to, from, next) => {
     'SpecimenManagement',
     'PhotoManagement',
     'SpecimenManagementDetail',
+    'SpecimenManagementUDDetail',
     'PhotoManagementDetail',
     'Dashboard'
   ]

@@ -8,6 +8,6 @@ declare module 'axios' {
     errorMsg: string
     message: string
     success: boolean
-    timestamp: string[] //Array<any>
+    timestamp: string[] // Array<any>
   }
 }
