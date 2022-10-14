@@ -188,6 +188,7 @@ export default class SpecimenList extends Mixins<any>(PaginationToQuery, QuerySe
 
   private handleSelectedKeysChange(selectedKeys: string[]) {
     this.selectedKeys = selectedKeys
+    ;(this as any).pageInfo.page = 1
     this.query()
   }
 
