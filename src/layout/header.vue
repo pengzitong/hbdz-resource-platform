@@ -5,7 +5,7 @@
         @click="$router.push('/home')"
         class="header-logo"
         fit="cover"
-        :src="require('@/assets/images/logo.jpg')"
+        :src="require('@/assets/images/logo.png')"
       ></el-image>
       <div class="header-text">湖北地质博物馆标本资源库</div>
     </div>

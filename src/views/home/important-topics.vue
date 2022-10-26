@@ -10,9 +10,10 @@
         :title="item.name"
         @title-click="handleClick"
         @image-click="handleClick"
+        :width="350"
       />
       <!--解决flex最后一行不居左问题-->
-      <div v-for="item in sourceData" :key="-item.topic_id" style="width: 250px; height: 0px"></div>
+      <div v-for="item in sourceData" :key="-item.topic_id" style="width: 350px; height: 0px"></div>
     </div>
   </section-container>
 </template>

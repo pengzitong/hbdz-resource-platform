@@ -58,7 +58,7 @@
             </el-form-item>
           </td>
           <td>
-            <el-form-item class="td-form-item" label="保存单位：">
+            <el-form-item class="td-form-item" label="存放位置：">
               <el-select
                 style="width: 168px"
                 clearable

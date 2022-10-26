@@ -42,8 +42,7 @@
         :preview-src-list="specimenImageLists.map(data => data.url)"
         @title-click="handleSourceNameClick"
         sub-background="#f5f5f5"
-        class="mt-12"
-        style="border: 1px solid #bdd2ed"
+        class="mt-12 border-primary"
         :key="item.specimen_number"
       />
       <div

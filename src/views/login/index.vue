@@ -13,7 +13,7 @@
         <el-image
           class="title-logo"
           fit="cover"
-          :src="require('@/assets/images/logo.jpg')"
+          :src="require('@/assets/images/logo.png')"
         ></el-image>
         <span class="title">系统登录</span>
       </div>
@@ -96,8 +96,8 @@ export default class extends Vue {
   }
 
   private loginForm = {
-    username: 'panso',
-    password: 'panso123'
+    username: '',
+    password: ''
   }
 
   private loginRules = {
