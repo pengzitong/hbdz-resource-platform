@@ -7,7 +7,11 @@
         fit="cover"
         :src="require('@/assets/images/logo.png')"
       ></el-image>
-      <div class="header-text">湖北地质博物馆标本资源库</div>
+      <div class="header-text">
+        湖北地质博物馆标本资源库
+        <br />
+        Specimen Resource Bank of Hubei Geological Museum
+      </div>
     </div>
     <div class="nav-wrapper">
       <layout-nav></layout-nav>
@@ -42,7 +46,7 @@ export default class Header extends Vue {
     position: relative;
     text-align: center;
     margin: 0 auto;
-    line-height: 200px;
+    // line-height: 200px;
     height: 200px;
     width: 1150px;
     font-size: 35px;
@@ -55,6 +59,9 @@ export default class Header extends Vue {
       height: 55px;
     }
     .header-text {
+      transform: translateY(50px);
+      font-family: cursive;
+      text-shadow: 4px 4px 2px #000;
       /*animation: ani ease-in-out 0.6s;*/
     }
   }
