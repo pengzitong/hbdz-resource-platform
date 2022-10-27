@@ -54,7 +54,7 @@ export default class Header extends Vue {
     .header-logo {
       position: absolute;
       left: 0;
-      top: 12px;
+      top: 56px;
       width: 100px;
       height: 55px;
     }
