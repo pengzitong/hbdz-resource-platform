@@ -170,6 +170,7 @@ export default class PhotoManagement extends Mixins(PaginationToQuery) {
 
   private handleAdd() {
     this.$router.push(
+      // `/photo-management/detail?metaTitle=新增图片&type=add&gallery_id=${this.searchForm.gallery_id}`
       `/photo-management/detail?metaTitle=新增图片&type=add&gallery_id=${this.searchForm.gallery_id}`
     )
   }

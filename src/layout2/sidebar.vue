@@ -4,7 +4,7 @@
       <el-image
         class="menu-title-logo"
         fit="cover"
-        :src="require('@/assets/images/logo.jpg')"
+        :src="require('@/assets/images/logo.png')"
       ></el-image>
       <span class="menu-title-text" :class="isCollapse ? 'collapse' : ''">湖北地质博物馆</span>
     </div>
@@ -16,7 +16,7 @@
       :collapse="isCollapse"
       background-color="#545c64"
       text-color="#fff"
-      active-text-color="#388f8c"
+      active-text-color="#64e0db"
     >
       <router-link to="/dashboard">
         <el-menu-item index="/dashboard">
@@ -84,7 +84,6 @@ export default class Sidebar extends Vue {
     padding: 12px 0;
     &-logo {
       width: 50px;
-      height: 30px;
     }
     &-text {
       display: inline-block;

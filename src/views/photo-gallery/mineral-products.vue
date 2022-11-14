@@ -1,6 +1,6 @@
 <template>
   <div class="mineral-products">
-    <static-slider :banners="banners" class="mb-40" />
+    <static-slider v-if="false" :banners="banners" class="mb-40" />
     <el-form class="search-form" :inline="true" align="center" @submit.native.prevent>
       <el-form-item>
         <el-input
@@ -8,14 +8,15 @@
           v-model="search"
           size="medium"
           @keyup.enter.native="handleQuery"
-          placeholder="请输入查询关键字（名称、颜色等）"
+          placeholder="请输入查询关键字"
         />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" size="medium" @click="handleQuery">查询</el-button>
       </el-form-item>
       <br />
-      <el-form-item class="search-radio-wrapper">
+      <!--去掉图片小分类-->
+      <el-form-item class="search-radio-wrapper" v-if="false">
         <div class="search-radio">
           <div
             class="search-radio-item border-primary"

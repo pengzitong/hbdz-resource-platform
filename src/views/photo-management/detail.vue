@@ -21,18 +21,28 @@
       <el-form-item label="图片名称：" prop="image_name">
         <el-input disabled size="small" v-model="form.image_name"></el-input>
       </el-form-item>
-      <el-form-item label="图片描述：" prop="description">
-        <el-input
-          :disabled="readonly"
-          autosize
-          size="small"
-          type="textarea"
-          v-model="form.description"
-        ></el-input>
+<!--      <el-form-item label="图片描述：" prop="description">-->
+<!--        <el-input-->
+<!--          :disabled="readonly"-->
+<!--          autosize-->
+<!--          size="small"-->
+<!--          type="textarea"-->
+<!--          v-model="form.description"-->
+<!--        ></el-input>-->
+<!--      </el-form-item>-->
+      <el-form-item label="类别：" prop="gallery_id">
+        <el-select size="small" v-model="form.gallery_id">
+          <el-option
+              v-for="item in category"
+              :label="item.name"
+              :key="item.gallery_id"
+              :value="item.gallery_id"
+          ></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="分类名称：" prop="category_name">
-        <el-input :disabled="readonly" size="small" v-model="form.category_name"></el-input>
-      </el-form-item>
+<!--      <el-form-item label="分类名称：" prop="category_name">-->
+<!--        <el-input :disabled="readonly" size="small" v-model="form.category_name"></el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="标本编号：" prop="specimen_djh">
         <el-input :disabled="readonly" size="small" v-model="form.specimen_djh"></el-input>
       </el-form-item>
@@ -60,15 +70,23 @@ export default class PhotoManagementDetail extends Vue {
     fileList: []
   }
 
+  private readonly category = [
+    { name: '矿物精品', gallery_id: '2' },
+    { name: '岩石精品', gallery_id: '4' },
+    { name: '矿石精品', gallery_id: '3' },
+    { name: '化石精品', gallery_id: '1' }
+  ]
+
   private dialogImageUrl = ''
   private dialogVisible = false
   private uploading = false
 
   private rules = {
     fileList: [{ required: true, message: '请上传图片', trigger: 'change' }],
-    category_name: [{ required: true, message: '请填写分类名称' }],
-    specimen_djh: [{ required: true, message: '请填写标本编号' }],
-    description: [{ required: true, message: '请填写图片描述' }]
+    // category_name: [{ required: true, message: '请填写分类名称' }],
+    gallery_id: [{ required: true, message: '请选择分类' }],
+    specimen_djh: [{ required: true, message: '请填写标本编号' }]
+    // description: [{ required: true, message: '请填写图片描述' }]
   }
 
   private get readonly() {
@@ -78,18 +96,20 @@ export default class PhotoManagementDetail extends Vue {
   private mounted() {
     const {
       specimen_number: specimen_djh,
-      category_name,
+      // category_name,
+      gallery_id,
       image_name,
-      description,
+      // description,
       image_url,
       type
     } = this.$route.query
-    if (type == 'add') return
+    if (!type || type == 'add') return
     this.form = {
       specimen_djh,
-      category_name,
-      image_name,
-      description
+      // category_name,
+      gallery_id,
+      image_name
+      // description
     }
     this.form.fileList = [{ url: image_url }]
   }
@@ -106,9 +126,10 @@ export default class PhotoManagementDetail extends Vue {
 
   private doImageUpload(file: any) {
     this.uploading = true
+    /** @param data: { data: "base64 data" }*/
     const callback = async (data: any) => {
       try {
-        const { name, url } = await importImage(data)
+        const { name, url } = await importImage({ name: file.name, ...data })
         this.form.fileList.push({ url })
         this.form.image_name = name
         ;(this.$refs.form as ElForm).validateField('fileList')
@@ -137,9 +158,21 @@ export default class PhotoManagementDetail extends Vue {
     ;(this.$refs.form as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         try {
-          const { category_name, description, image_name, specimen_djh } = this.form
-          const { gallery_id, type, best_photo_gallery_id } = this.$route.query
-          const params = { category_name, description, image_name, specimen_djh, gallery_id }
+          const {
+            // category_name,
+            gallery_id,
+            // description,
+            image_name,
+            specimen_djh
+          } = this.form
+          const { type, best_photo_gallery_id } = this.$route.query
+          const params = {
+            // category_name,
+            // description,
+            image_name,
+            specimen_djh,
+            gallery_id
+          }
           const photo_gallery_id = type == 'edit' ? best_photo_gallery_id : ''
           await uploadGalleryImage(params, photo_gallery_id as string)
           this.$message.warning('保存成功')
