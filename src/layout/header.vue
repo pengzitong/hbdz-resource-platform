@@ -57,7 +57,7 @@ export default class Header extends Vue {
     .header-logo {
       position: absolute;
       left: 0;
-      top: 32px;
+      top: 33px;
       width: 150px;
       height: 93px;
     }
@@ -73,6 +73,8 @@ export default class Header extends Vue {
         line-height: 50px;
       }
       .en-title {
+        height: 30px;
+        line-height: 30px;
         font-size: 24px;
         word-spacing: 8px;
         text-shadow: 3px 3px 2px #000;
