@@ -12,7 +12,7 @@
       <div class="title-container">
         <el-image
           class="title-logo"
-          fit="cover"
+          fit="contain"
           :src="require('@/assets/images/logo.png')"
         ></el-image>
         <span class="title">系统登录</span>
@@ -264,8 +264,10 @@ export default class extends Vue {
     justify-content: center;
     margin-bottom: 50px;
     .title-logo {
-      width: 50px;
-      height: 30px;
+      width: 100px;
+      height: 60px;
+      margin-left: -30px;
+      margin-right: -30px;
     }
 
     .title {
