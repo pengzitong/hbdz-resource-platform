@@ -8,9 +8,8 @@
         :src="require('@/assets/images/logo.png')"
       ></el-image>
       <div class="header-text">
-        湖北地质博物馆标本资源库
-        <br />
-        Specimen Resource Bank of Hubei Geological Museum
+        <div class="cn-title">湖北地质博物馆标本资源库</div>
+        <div class="en-title">Specimen Resource Bank of Hubei Geological Museum</div>
       </div>
     </div>
     <div class="nav-wrapper">
@@ -38,7 +37,8 @@ export default class Header extends Vue {
 .layout-header {
   width: 100%;
   height: 200px;
-  background: url('~@/assets/images/top-banner.png') no-repeat center/100% 200px;
+  //background: url('~@/assets/images/top-banner.png') no-repeat center/100% 200px;
+  background: rgb(37, 90, 88);
   overflow: hidden;
   font-family: 'PingFangSC-Light';
   position: relative;
@@ -51,18 +51,32 @@ export default class Header extends Vue {
     width: 1150px;
     font-size: 35px;
     color: rgba(235, 235, 235);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     .header-logo {
       position: absolute;
       left: 0;
-      top: 56px;
-      width: 100px;
-      height: 55px;
+      top: 52px;
+      width: 150px;
+      height: 93px;
     }
     .header-text {
-      transform: translateY(50px);
+      //transform: translateY(50px);
       font-family: cursive;
       text-shadow: 4px 4px 2px #000;
       /*animation: ani ease-in-out 0.6s;*/
+      .cn-title {
+        font-size: 50px;
+        letter-spacing: 8px;
+        height: 50px;
+        line-height: 50px;
+      }
+      .en-title {
+        font-size: 24px;
+        word-spacing: 8px;
+        text-shadow: 3px 3px 2px #000;
+      }
     }
   }
   .nav-wrapper {

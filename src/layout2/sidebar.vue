@@ -16,7 +16,7 @@
       :collapse="isCollapse"
       background-color="#545c64"
       text-color="#fff"
-      active-text-color="#409eff"
+      active-text-color="#388f8c"
     >
       <router-link to="/dashboard">
         <el-menu-item index="/dashboard">

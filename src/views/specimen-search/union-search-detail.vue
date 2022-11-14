@@ -241,7 +241,7 @@ export default class SpecimenDetail extends Vue {
   ]
   private data_fields_collection_unit = [
     {
-      left: { field: 'save_unit', label: '存放位置', colspan: 2 }
+      left: { field: 'save_unit', label: '库存位置', colspan: 2 }
     },
     {
       left: { field: 'specimen_number', label: '标本编号' },

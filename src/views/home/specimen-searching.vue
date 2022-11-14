@@ -1,6 +1,6 @@
 <template>
   <section-container class="home-specimen-searching" title="标签检索">
-    <div class="search-form-wrapper border">
+    <div class="search-form-wrapper">
       <el-form :inline="true" :model="searchForm" class="search-form" label-width="100px">
         <el-form-item label="标本查询">
           <el-input
@@ -26,7 +26,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="search-form-wrapper border mt-20">
+    <div class="search-form-wrapper mt-20">
       <el-form :inline="true" :model="photoSearchForm" class="search-form" label-width="100px">
         <el-form-item label="图片库查询">
           <el-input
@@ -79,7 +79,7 @@ export default class SpecimenSearching extends Vue {
   private readonly conditionList: any[] = [
     { label: '资源中文名', value: 'resource_cn_name' },
     { label: '资源外文名', value: 'resource_en_name' },
-    { label: '存放位置', value: 'save_unit' },
+    { label: '库存位置', value: 'save_unit' },
     { label: '产地', value: 'origin' }
   ]
 

@@ -56,7 +56,7 @@ export default class Detail extends Vue {
     { key: 'resource_classification', label: '资源归类编码' },
     { key: 'how_to_share', label: '共享方式' }, // todo enum
     { key: 'obtain_channel', label: '获取途径' }, // todo enum
-    { key: 'save_unit', label: '存放位置' },
+    { key: 'save_unit', label: '库存位置' },
     { key: 'contact_information', label: '联系方式' }
   ]
 

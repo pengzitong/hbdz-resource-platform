@@ -26,7 +26,8 @@ export default class Header extends Vue {
 <style lang="scss" scoped>
 .layout-footer {
   /*height: 200px;*/
-  background: url('~@/assets/images/top-banner.png') no-repeat center/100% 100%;
+  //background: url('~@/assets/images/top-banner.png') no-repeat center/100% 100%;
+  background: rgb(37, 90, 88);
   .copyright {
     font-size: 14px;
     color: #ffffff;

@@ -23,7 +23,7 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-        <el-form-item label="存放位置">
+        <el-form-item label="库存位置">
           <el-select
             clearable
             placeholder="--请选择--"
