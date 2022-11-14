@@ -57,12 +57,12 @@ export default class Header extends Vue {
     .header-logo {
       position: absolute;
       left: 0;
-      top: 52px;
+      top: 32px;
       width: 150px;
       height: 93px;
     }
     .header-text {
-      //transform: translateY(50px);
+      transform: translateY(-20px);
       font-family: cursive;
       text-shadow: 4px 4px 2px #000;
       /*animation: ani ease-in-out 0.6s;*/
