@@ -98,13 +98,12 @@
                 <td style="width: 10%; border: none">图片资料：</td>
                 <td style="width: 90%; border-top: none">
                   <el-image
-                    :preview-src-list="supplementary_descriptive_information.image_urls"
-                    style="width: 100px; height: 60px"
-                    fit="cover"
-                    :src="
-                      supplementary_descriptive_information.image_urls &&
-                      supplementary_descriptive_information.image_urls[0]
-                    "
+                      v-for="(src, index) in supplementary_descriptive_information.image_urls || []"
+                      :key="index"
+                      :preview-src-list="supplementary_descriptive_information.image_urls"
+                      style="width: 100px; height: 60px;margin-right: 5px"
+                      fit="cover"
+                      :src="src"
                   ></el-image>
                 </td>
               </tr>
@@ -155,7 +154,8 @@
     </table>
 
     <div class="print-wrapper">
-      <el-button size="small" @click="$router.back()" type="primary">返回</el-button>
+      <slot v-if="$slots['bottom-button']" name="bottom-button"></slot>
+      <el-button v-else size="small" @click="$router.back()" type="primary">返回</el-button>
     </div>
   </div>
 </template>
