@@ -8,24 +8,27 @@
           @keyup.enter.native="query"
         ></el-input>
       </el-form-item>
-      <el-form-item label="保存单位">
-        <el-select
-          clearable
-          placeholder="--请选择--"
-          size="small"
-          @change="query"
-          v-model="searchForm.save_unit"
-        >
-          <el-option
-            v-for="(item, index) in save_unit_list"
-            :label="item"
-            :value="item"
-            :key="index"
-          ></el-option>
-        </el-select>
+<!--      <el-form-item label="保存单位">-->
+<!--        <el-select-->
+<!--          clearable-->
+<!--          placeholder="&#45;&#45;请选择&#45;&#45;"-->
+<!--          size="small"-->
+<!--          @change="query"-->
+<!--          v-model="searchForm.save_unit"-->
+<!--        >-->
+<!--          <el-option-->
+<!--            v-for="(item, index) in save_unit_list"-->
+<!--            :label="item"-->
+<!--            :value="item"-->
+<!--            :key="index"-->
+<!--          ></el-option>-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+      <el-form-item label="库存位置号">
+        <el-input style="width: 150px" v-model="searchForm.stock_location" size="small" @keyup.enter.native="query"></el-input>
       </el-form-item>
       <el-form-item label="产地">
-        <el-input v-model="searchForm.origin" size="small" @keyup.enter.native="query"></el-input>
+        <el-input style="width: 150px" v-model="searchForm.origin" size="small" @keyup.enter.native="query"></el-input>
       </el-form-item>
       <el-form-item label="类别">
         <el-select size="small" @change="query" v-model="searchForm.specimen_type">
@@ -97,6 +100,7 @@ export default class UnionSearchList extends Mixins<any>(PaginationToQuery, Quer
     resource_name: undefined,
     resource_cn_name: undefined,
     save_unit: undefined,
+    stock_location: undefined,
     origin: undefined,
     specimen_type: ''
   }
@@ -112,11 +116,12 @@ export default class UnionSearchList extends Mixins<any>(PaginationToQuery, Quer
   private specimenLists: ISpecimen[] = []
 
   private mounted() {
-    const { resource_cn_name, resource_en_name, save_unit, origin }: any =
+    const { resource_cn_name, resource_en_name, save_unit, stock_location, origin }: any =
       this.$store.state.cacheQuery
     resource_en_name && (this.searchForm.resource_name = resource_en_name)
     resource_cn_name && (this.searchForm.resource_name = resource_cn_name)
     save_unit && (this.searchForm.save_unit = save_unit)
+    stock_location && (this.searchForm.stock_location = stock_location)
     origin && (this.searchForm.origin = origin)
     this.query()
   }

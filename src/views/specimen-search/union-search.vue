@@ -1,6 +1,6 @@
 <template>
   <div class="union-search">
-    <el-form label-width="110px" :inline="true" align="center">
+    <el-form label-width="120px" :inline="true" align="center">
       <table class="search-table mb-10">
         <tr>
           <td>
@@ -35,7 +35,7 @@
           <td>
             <el-form-item class="td-form-item" label="省：">
               <el-select
-                style="width: 168px"
+                style="width: 202px"
                 clearable
                 placeholder="--请选择--"
                 size="small"
@@ -57,49 +57,50 @@
               <el-input v-model="form.country" size="small"></el-input>
             </el-form-item>
           </td>
+<!--          <td>-->
+<!--            <el-form-item class="td-form-item" label="保存单位：">-->
+<!--              <el-select-->
+<!--                style="width: 202px"-->
+<!--                clearable-->
+<!--                placeholder="&#45;&#45;请选择&#45;&#45;"-->
+<!--                size="small"-->
+<!--                v-model="form.save_unit"-->
+<!--              >-->
+<!--                <el-option-->
+<!--                  v-for="(item, index) in save_unit_list"-->
+<!--                  :label="item"-->
+<!--                  :value="item"-->
+<!--                  :key="index"-->
+<!--                ></el-option>-->
+<!--              </el-select>-->
+<!--            </el-form-item>-->
+<!--          </td>-->
           <td>
-            <el-form-item class="td-form-item" label="保存单位：">
-              <el-select
-                style="width: 168px"
-                clearable
-                placeholder="--请选择--"
-                size="small"
-                v-model="form.save_unit"
-              >
-                <el-option
-                  v-for="(item, index) in save_unit_list"
-                  :label="item"
-                  :value="item"
-                  :key="index"
-                ></el-option>
-              </el-select>
+            <el-form-item class="td-form-item" label="资源提供者：">
+              <el-input v-model="form.provider" size="small"></el-input>
             </el-form-item>
           </td>
         </tr>
 
         <tr>
           <td>
-            <el-form-item class="td-form-item" label="资源提供者：">
-              <el-input v-model="form.provider" size="small"></el-input>
-            </el-form-item>
-          </td>
-          <td>
             <el-form-item class="td-form-item" label="资源形成时代：">
               <el-input v-model="form.formative_era" size="small"></el-input>
             </el-form-item>
           </td>
-        </tr>
-        <tr>
           <td>
             <el-form-item class="td-form-item" label="标本编号：">
               <el-input v-model="form.specimen_number" size="small"></el-input>
             </el-form-item>
           </td>
+        </tr>
+        <tr>
           <td>
             <el-form-item class="td-form-item" label="库存位置号：">
-              <el-input v-model="form.sourceNo" size="small"></el-input>
+              <el-input v-model="form.stock_location" size="small"></el-input>
             </el-form-item>
           </td>
+          <td></td>
         </tr>
       </table>
       <el-form-item>

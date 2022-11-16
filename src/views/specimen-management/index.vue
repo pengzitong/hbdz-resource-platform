@@ -67,23 +67,23 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-        <el-form-item label="保存单位：">
-          <el-select
-            style="width: 168px"
-            clearable
-            placeholder="--请选择--"
-            size="small"
-            @change="query"
-            v-model="searchForm.save_unit"
-          >
-            <el-option
-              v-for="(item, index) in save_unit_list"
-              :label="item"
-              :value="item"
-              :key="index"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--        <el-form-item label="保存单位：">-->
+<!--          <el-select-->
+<!--            style="width: 168px"-->
+<!--            clearable-->
+<!--            placeholder="&#45;&#45;请选择&#45;&#45;"-->
+<!--            size="small"-->
+<!--            @change="query"-->
+<!--            v-model="searchForm.save_unit"-->
+<!--          >-->
+<!--            <el-option-->
+<!--              v-for="(item, index) in save_unit_list"-->
+<!--              :label="item"-->
+<!--              :value="item"-->
+<!--              :key="index"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
         <el-form-item label="资源提供者：">
           <el-input
             v-model="searchForm.provider"
@@ -110,7 +110,7 @@
         </el-form-item>
         <el-form-item label="库存位置号：">
           <el-input
-            v-model="searchForm.sourceNo"
+            v-model="searchForm.stock_location"
             size="small"
             placeholder="请输入"
             @keyup.enter.native="query"

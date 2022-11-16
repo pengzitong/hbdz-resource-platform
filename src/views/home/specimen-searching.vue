@@ -79,7 +79,8 @@ export default class SpecimenSearching extends Vue {
   private readonly conditionList: any[] = [
     { label: '资源中文名', value: 'resource_cn_name' },
     { label: '资源外文名', value: 'resource_en_name' },
-    { label: '保存单位', value: 'save_unit' },
+    // { label: '保存单位', value: 'save_unit' },
+    { label: '库存位置号', value: 'stock_location' },
     { label: '产地', value: 'origin' }
   ]
 
