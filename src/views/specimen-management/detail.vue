@@ -15,7 +15,7 @@
           <span>{{ item.left.label }}：{{ passport_information[item.left.field] }}</span>
         </td>
         <td v-if="item.right">
-          <span>{{ item.right.label }}：{{ passport_information[item.right.field] }}</span>
+          <span>{{ item.right.label }}：<span class="special-field" v-html="passport_information[item.right.field]"></span></span>
         </td>
       </tr>
       <!--标记信息-->
@@ -316,6 +316,11 @@ export default class SpecimenDetail extends Vue {
         .section-title {
           font-size: 18px;
           color: var(--primary-color);
+        }
+        .special-field {
+          ::v-deep i {
+            font-style: italic;
+          }
         }
       }
       &:first-child {

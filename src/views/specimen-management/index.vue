@@ -108,7 +108,7 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-        <el-form-item label="库存号位置：">
+        <el-form-item label="库存位置号：">
           <el-input
             v-model="searchForm.sourceNo"
             size="small"
