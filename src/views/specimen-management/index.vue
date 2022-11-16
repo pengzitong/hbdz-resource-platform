@@ -67,7 +67,7 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-        <el-form-item label="库存位置：">
+        <el-form-item label="保存单位：">
           <el-select
             style="width: 168px"
             clearable
