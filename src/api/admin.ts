@@ -37,6 +37,10 @@ export const importImage = (data: any) => {
   return request.post(`/admin_api/best_photo_gallery/image/upload`, data)
 }
 
+export const importSpecimenImage = (data: any) => {
+  return request.post(`/admin_api/specimen/image/upload`, data)
+}
+
 export const uploadGalleryImage = (data: any, best_photo_gallery_id: string | number = '') => {
   const path = best_photo_gallery_id ? `/${best_photo_gallery_id}` : ''
   return request.post(`/admin_api/best_photo_gallery${path}`, data)
@@ -44,4 +48,8 @@ export const uploadGalleryImage = (data: any, best_photo_gallery_id: string | nu
 
 export const deleteGalleryImage = (best_photo_gallery_id: string | number) => {
   return request.post(`/admin_api/best_photo_gallery/${best_photo_gallery_id}/delete`)
+}
+
+export const querySpecimentDetailForEdit = (specimen_number: string) => {
+  return request.get(`/admin_api/specimen/${specimen_number}`)
 }

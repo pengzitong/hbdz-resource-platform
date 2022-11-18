@@ -280,6 +280,37 @@ const routes: Array<RouteConfig> = [
     ]
   },
   {
+    path: '/topic-management',
+    component: Layout2,
+    children: [
+      {
+        path: '/topic-management',
+        component: () =>
+          import(/* webpackChunkName: "topic-management" */ '@/views/topic-management/index.vue'),
+        name: 'TopicManagement',
+        meta: { title: '专题管理' }
+      },
+      {
+        path: '/topic-management/cu-detail',
+        component: () =>
+          import(
+            /* webpackChunkName: "topic-management-detail" */ '@/views/topic-management/cu-detail.vue'
+          ),
+        name: 'TopicManagementCUDetail',
+        meta: { title: '专题详情' } // 新增、编辑、详情
+      },
+      {
+        path: '/topic-management/topic-detail',
+        component: () =>
+          import(
+            /* webpackChunkName: "topic-management-detail" */ '@/views/topic-management/detail.vue'
+          ),
+        name: 'TopicManagementDetail',
+        meta: { title: '专题详情' } // 专题详情
+      }
+    ]
+  },
+  {
     path: '/photo-management',
     component: Layout2,
     children: [

@@ -21,28 +21,28 @@
       <el-form-item label="图片名称：" prop="image_name">
         <el-input disabled size="small" v-model="form.image_name"></el-input>
       </el-form-item>
-<!--      <el-form-item label="图片描述：" prop="description">-->
-<!--        <el-input-->
-<!--          :disabled="readonly"-->
-<!--          autosize-->
-<!--          size="small"-->
-<!--          type="textarea"-->
-<!--          v-model="form.description"-->
-<!--        ></el-input>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="图片描述：" prop="description">-->
+      <!--        <el-input-->
+      <!--          :disabled="readonly"-->
+      <!--          autosize-->
+      <!--          size="small"-->
+      <!--          type="textarea"-->
+      <!--          v-model="form.description"-->
+      <!--        ></el-input>-->
+      <!--      </el-form-item>-->
       <el-form-item label="类别：" prop="gallery_id">
         <el-select size="small" v-model="form.gallery_id">
           <el-option
-              v-for="item in category"
-              :label="item.name"
-              :key="item.gallery_id"
-              :value="item.gallery_id"
+            v-for="item in category"
+            :label="item.name"
+            :key="item.gallery_id"
+            :value="item.gallery_id"
           ></el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="分类名称：" prop="category_name">-->
-<!--        <el-input :disabled="readonly" size="small" v-model="form.category_name"></el-input>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="分类名称：" prop="category_name">-->
+      <!--        <el-input :disabled="readonly" size="small" v-model="form.category_name"></el-input>-->
+      <!--      </el-form-item>-->
       <el-form-item label="标本编号：" prop="specimen_djh">
         <el-input :disabled="readonly" size="small" v-model="form.specimen_djh"></el-input>
       </el-form-item>
@@ -175,7 +175,7 @@ export default class PhotoManagementDetail extends Vue {
           }
           const photo_gallery_id = type == 'edit' ? best_photo_gallery_id : ''
           await uploadGalleryImage(params, photo_gallery_id as string)
-          this.$message.warning('保存成功')
+          this.$message.success('保存成功')
           this.goBack()
         } catch (e) {
           console.warn(e, 'login')

@@ -21,16 +21,13 @@ service.interceptors.response.use(
   (response: AxiosResponse) => {
     // 接口调用成功
     if (response.status == 200) {
-      console.log(response.data, 'response')
       return Promise.resolve(response.data)
     } else {
-      console.log(response.data, 'error res')
       Vue.prototype.$message.error((response.data && response.data.error) || '系统异常')
       return Promise.reject('error')
     }
   },
   error => {
-    console.log(error.response, 'error response')
     const { response } = error
     if (response.status == 401) {
       Vue.prototype.$message.warning('登录状态已过期，请重新登录')

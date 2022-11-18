@@ -67,23 +67,23 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-<!--        <el-form-item label="保存单位：">-->
-<!--          <el-select-->
-<!--            style="width: 168px"-->
-<!--            clearable-->
-<!--            placeholder="&#45;&#45;请选择&#45;&#45;"-->
-<!--            size="small"-->
-<!--            @change="query"-->
-<!--            v-model="searchForm.save_unit"-->
-<!--          >-->
-<!--            <el-option-->
-<!--              v-for="(item, index) in save_unit_list"-->
-<!--              :label="item"-->
-<!--              :value="item"-->
-<!--              :key="index"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="保存单位：">-->
+        <!--          <el-select-->
+        <!--            style="width: 168px"-->
+        <!--            clearable-->
+        <!--            placeholder="&#45;&#45;请选择&#45;&#45;"-->
+        <!--            size="small"-->
+        <!--            @change="query"-->
+        <!--            v-model="searchForm.save_unit"-->
+        <!--          >-->
+        <!--            <el-option-->
+        <!--              v-for="(item, index) in save_unit_list"-->
+        <!--              :label="item"-->
+        <!--              :value="item"-->
+        <!--              :key="index"-->
+        <!--            ></el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
         <el-form-item label="资源提供者：">
           <el-input
             v-model="searchForm.provider"
@@ -108,6 +108,22 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
+        <el-form-item label="类别：">
+          <el-select
+            style="width: 168px"
+            placeholder="--请选择--"
+            size="small"
+            @change="query"
+            v-model="searchForm.specimen_type"
+          >
+            <el-option
+              v-for="(item, index) in specimen_type_list"
+              :label="item.label"
+              :value="item.value"
+              :key="index"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="库存位置号：">
           <el-input
             v-model="searchForm.stock_location"
@@ -125,7 +141,7 @@
     </div>
 
     <div class="button-group">
-      <el-button v-if="false" icon="el-icon-plus" type="primary" size="small" @click="handleAdd">
+      <el-button icon="el-icon-plus" type="primary" size="small" @click="handleAdd">
         新增标本
       </el-button>
 
@@ -133,7 +149,7 @@
       <!--        批量上传-->
       <!--      </el-button>-->
       <el-upload
-        style="display: inline-block"
+        style="display: inline-block; margin-left: 10px"
         action=""
         :show-file-list="false"
         :auto-upload="false"
@@ -146,7 +162,7 @@
       </el-upload>
 
       <el-upload
-        style="display: inline-block; margin: 0 10px"
+        style="display: inline-block; margin-left: 10px"
         action=""
         :show-file-list="false"
         :auto-upload="false"
@@ -160,6 +176,7 @@
       </el-upload>
 
       <el-button
+        style="display: inline-block; margin-left: 10px"
         :loading="downloadLoading"
         icon="el-icon-download"
         type="warning"
@@ -180,7 +197,11 @@
         ></el-table-column>
         <el-table-column prop="resource_name" show-overflow-tooltip label="资源名称">
           <template slot-scope="scope">
-            <el-link type="primary" style="font-weight: 400" @click="handleView(scope.row)">
+            <el-link
+              type="primary"
+              style="font-weight: 400"
+              @click="handleViewSpecimenDetail(scope.row)"
+            >
               {{ scope.row.resource_name }}
             </el-link>
           </template>
@@ -211,7 +232,6 @@
               查看
             </el-button>
             <el-button
-              v-if="false"
               :loading="textButtonLoading"
               type="text"
               size="small"
@@ -260,6 +280,13 @@ export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, Q
     num: 10,
     all_page: 0
   }
+
+  private specimen_type_list = [
+    { label: '矿物标本', value: '矿物' },
+    { label: '岩石标本', value: '岩石' },
+    { label: '矿石标本', value: '矿石' },
+    { label: '化石标本', value: '化石' }
+  ]
 
   private searchForm: any = {}
 
@@ -375,18 +402,24 @@ export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, Q
   }
 
   private handleAdd() {
-    this.$router.push(`/specimen-management/ud-detail?metaTitle=新增标本`)
+    this.$router.push(`/specimen-management/ud-detail?metaTitle=新增标本&type=add`)
   }
 
-  private handleView({ specimen_number }: any) {
+  private handleViewSpecimenDetail({ specimen_number }: any) {
     this.$router.push(
       `/specimen-management/detail?metaTitle=标本详情&specimen_number=${specimen_number}`
     )
   }
 
+  private handleView({ specimen_number }: any) {
+    this.$router.push(
+      `/specimen-management/ud-detail?metaTitle=标本信息&type=view&specimen_number=${specimen_number}`
+    )
+  }
+
   private handleEdit({ specimen_number }: any) {
     this.$router.push(
-      `/specimen-management/ud-detail?metaTitle=编辑标本&specimen_number=${specimen_number}`
+      `/specimen-management/ud-detail?metaTitle=编辑标本&type=edit&specimen_number=${specimen_number}`
     )
   }
 

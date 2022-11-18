@@ -21,8 +21,8 @@
       @click="handleTitleClick(item)"
       :style="{ backgroundColor: subBackground }"
     >
-      <div class="image-main-title ellipsis-lines__one">{{ title }}</div>
-      <div class="image-sub-title ellipsis-lines__one" v-if="subTitle">{{ subTitle }}</div>
+      <div class="image-main-title ellipsis-lines__one" v-html="title">{{ title }}</div>
+      <div class="image-sub-title ellipsis-lines__one" v-if="subTitle" v-html="subTitle"></div>
     </div>
   </div>
 </template>
@@ -89,6 +89,9 @@ export default class ImageShow extends Vue {
       font-size: 12px;
       line-height: 18px;
       color: #777777;
+      ::v-deep i {
+        font-style: italic;
+      }
     }
   }
 }

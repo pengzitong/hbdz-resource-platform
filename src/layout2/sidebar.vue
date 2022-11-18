@@ -32,6 +32,13 @@
         </el-menu-item>
       </router-link>
 
+      <router-link to="/topic-management">
+        <el-menu-item index="/topic-management">
+          <i class="el-icon-document"></i>
+          <span slot="title">专题管理</span>
+        </el-menu-item>
+      </router-link>
+
       <router-link to="/photo-management">
         <el-menu-item index="/photo-management">
           <i class="el-icon-picture-outline"></i>
