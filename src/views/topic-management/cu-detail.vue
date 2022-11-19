@@ -219,8 +219,8 @@ export default class TopicManagementCUDetail extends Vue {
 
   private handleUrl(url: string) {
     return process.env.VUE_APP_API_ENV == 'development'
-      ? `http://tripod.wx-local.leqiai.cn/${url}`
-      : `${window.location.hostname}/${url}`
+      ? `https://tripod.wx-local.leqiai.cn/${url}`
+      : url
   }
 
   private handleChange(file: any, fileList: any) {

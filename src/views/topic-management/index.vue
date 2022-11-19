@@ -56,12 +56,12 @@
             <el-image
               :preview-src-list="[
                 env == 'development'
-                  ? `http://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
+                  ? `https://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
                   : `${scope.row.cover_url}`
               ]"
               :src="
                 env == 'development'
-                  ? `http://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
+                  ? `https://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
                   : `${scope.row.cover_url}`
               "
               style="width: 80px; height: 50px"
