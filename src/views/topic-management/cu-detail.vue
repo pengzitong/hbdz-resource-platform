@@ -188,10 +188,7 @@ export default class TopicManagementCUDetail extends Vue {
   private rules = {
     title: [{ required: true, message: '请填写专题名称', trigger: 'change' }],
     fileList: [{ required: true, message: '请上传专题封面', trigger: 'blur' }],
-    // category_name: [{ required: true, message: '请填写分类名称' }],
-    gallery_id: [{ required: true, message: '请选择分类' }],
-    specimen_djh: [{ required: true, message: '请填写标本编号' }]
-    // describe: [{ required: true, message: '请填写图片描述' }]
+    topic_id: [{ required: true, message: '请选择专题类别' }]
   }
 
   private get readonly() {

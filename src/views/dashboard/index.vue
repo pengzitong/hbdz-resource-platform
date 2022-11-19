@@ -22,8 +22,9 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class Dashboard extends Vue {
   private entries = [
-    { path: '/photo-management/detail?metaTitle=新增图片', name: '新增图片' }
-    // { path: '/specimen-management/detail?metaTitle=新增标本', name: '新增标本' }
+    { path: '/photo-management/detail?metaTitle=新增图片', name: '新增图片' },
+    { path: '/specimen-management/ud-detail?metaTitle=新增标本&type=add', name: '新增标本' },
+    { path: '/topic-management/cu-detail?metaTitle=新增专题&type=add', name: '新增专题' }
   ]
 }
 </script>

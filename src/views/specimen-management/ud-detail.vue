@@ -1,7 +1,7 @@
 <template>
   <div class="specimen-management-detail">
     <!--    {{ form }}-->
-    <el-form ref="form" :model="form" inline label-width="140px">
+    <el-form ref="form" :model="form" :rules="rules" inline label-width="140px">
       <div>
         <el-form-item label="标本图片：" prop="fileList">
           <el-upload
@@ -22,7 +22,13 @@
       </div>
 
       <el-form-item
-        :rules="[{ required: item.required !== false, message: '请输入', trigger: 'blur' }]"
+        :rules="[
+          {
+            required: item.required !== false,
+            message: item.type == 'enum' ? `请选择${item.label}` : `请填写${item.label}`,
+            trigger: 'blur'
+          }
+        ]"
         :prop="item.key"
         v-for="item in fields"
         :key="item.key"
@@ -185,6 +191,10 @@ export default class Detail extends Vue {
     fileList: [],
     image_paths: '',
     save_unit: '湖北地质博物馆'
+  }
+
+  private rules = {
+    fileList: [{ required: true, message: '请上传标本图片', trigger: 'blur' }]
   }
 
   private dialogImageUrl = ''

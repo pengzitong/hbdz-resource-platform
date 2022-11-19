@@ -23,22 +23,22 @@
             @keyup.enter.native="query"
           ></el-input>
         </el-form-item>
-<!--        <el-form-item label="保存单位">-->
-<!--          <el-select-->
-<!--            clearable-->
-<!--            placeholder="&#45;&#45;请选择&#45;&#45;"-->
-<!--            size="small"-->
-<!--            @change="query"-->
-<!--            v-model="searchForm.save_unit"-->
-<!--          >-->
-<!--            <el-option-->
-<!--              v-for="(item, index) in save_unit_list"-->
-<!--              :label="item"-->
-<!--              :value="item"-->
-<!--              :key="index"-->
-<!--            ></el-option>-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="保存单位">-->
+        <!--          <el-select-->
+        <!--            clearable-->
+        <!--            placeholder="&#45;&#45;请选择&#45;&#45;"-->
+        <!--            size="small"-->
+        <!--            @change="query"-->
+        <!--            v-model="searchForm.save_unit"-->
+        <!--          >-->
+        <!--            <el-option-->
+        <!--              v-for="(item, index) in save_unit_list"-->
+        <!--              :label="item"-->
+        <!--              :value="item"-->
+        <!--              :key="index"-->
+        <!--            ></el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
         <el-form-item label="产地">
           <el-input
             v-model="searchForm.origin"
@@ -193,10 +193,15 @@ export default class SpecimenList extends Mixins<any>(PaginationToQuery, QuerySe
   }
 
   private handleSourceNameClick({ specimen_number }: ISpecimen) {
-    this.$router.push({
+    // this.$router.push({
+    //   path: '/specimen-search/union-search-detail',
+    //   query: { specimen_number }
+    // })
+    const routeData = this.$router.resolve({
       path: '/specimen-search/union-search-detail',
       query: { specimen_number }
     })
+    window.open(routeData.href, '_blank')
   }
 }
 </script>
