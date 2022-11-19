@@ -8,27 +8,37 @@
           @keyup.enter.native="query"
         ></el-input>
       </el-form-item>
-<!--      <el-form-item label="保存单位">-->
-<!--        <el-select-->
-<!--          clearable-->
-<!--          placeholder="&#45;&#45;请选择&#45;&#45;"-->
-<!--          size="small"-->
-<!--          @change="query"-->
-<!--          v-model="searchForm.save_unit"-->
-<!--        >-->
-<!--          <el-option-->
-<!--            v-for="(item, index) in save_unit_list"-->
-<!--            :label="item"-->
-<!--            :value="item"-->
-<!--            :key="index"-->
-<!--          ></el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
+      <!--      <el-form-item label="保存单位">-->
+      <!--        <el-select-->
+      <!--          clearable-->
+      <!--          placeholder="&#45;&#45;请选择&#45;&#45;"-->
+      <!--          size="small"-->
+      <!--          @change="query"-->
+      <!--          v-model="searchForm.save_unit"-->
+      <!--        >-->
+      <!--          <el-option-->
+      <!--            v-for="(item, index) in save_unit_list"-->
+      <!--            :label="item"-->
+      <!--            :value="item"-->
+      <!--            :key="index"-->
+      <!--          ></el-option>-->
+      <!--        </el-select>-->
+      <!--      </el-form-item>-->
       <el-form-item label="库存位置号">
-        <el-input style="width: 150px" v-model="searchForm.stock_location" size="small" @keyup.enter.native="query"></el-input>
+        <el-input
+          style="width: 150px"
+          v-model="searchForm.stock_location"
+          size="small"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="产地">
-        <el-input style="width: 150px" v-model="searchForm.origin" size="small" @keyup.enter.native="query"></el-input>
+        <el-input
+          style="width: 150px"
+          v-model="searchForm.origin"
+          size="small"
+          @keyup.enter.native="query"
+        ></el-input>
       </el-form-item>
       <el-form-item label="类别">
         <el-select size="small" @change="query" v-model="searchForm.specimen_type">
@@ -65,7 +75,11 @@
           </el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="foreign_language_name" label="资源外文名" />
+      <el-table-column prop="foreign_language_name" label="资源外文名">
+        <template slot-scope="scope">
+          <span class="language-name" v-html="scope.row.foreign_language_name"></span>
+        </template>
+      </el-table-column>
       <el-table-column prop="complete_origin" label="产地" width="300" />
       <el-table-column prop="collation_name" label="资源归类" />
       <el-table-column prop="stock_location" label="库存位置号" />
@@ -163,10 +177,15 @@ export default class UnionSearchList extends Mixins<any>(PaginationToQuery, Quer
   }
 
   private handleSourceNameClick({ specimen_number }: ISpecimen) {
-    this.$router.push({
+    // this.$router.push({
+    //   path: '/specimen-search/union-search-detail',
+    //   query: { specimen_number }
+    // })
+    const routeData = this.$router.resolve({
       path: '/specimen-search/union-search-detail',
       query: { specimen_number }
     })
+    window.open(routeData.href, '_blank')
   }
 }
 </script>
@@ -178,10 +197,12 @@ export default class UnionSearchList extends Mixins<any>(PaginationToQuery, Quer
     padding: 15px 10px;
     background-color: #f5f5f5;
     border-radius: 4px;
-
     .el-form-item {
       margin-bottom: 0;
     }
+  }
+  .language-name {
+    font-style: italic;
   }
 }
 </style>
