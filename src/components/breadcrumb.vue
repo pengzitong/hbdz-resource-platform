@@ -47,7 +47,11 @@ export default class Breadcrumb extends Vue {
         'SpecimenManagement',
         'PhotoManagement',
         'SpecimenManagementDetail',
-        'PhotoManagementDetail'
+        'PhotoManagementDetail',
+        'SpecimenManagementUDDetail',
+        'TopicManagement',
+        'TopicManagementCUDetail',
+        'TopicManagementDetail'
       ]
       if (name && managePlatformRoutesName.includes(name.trim())) {
         matched = [{ path: '/dashboard', meta: { title: '首页' } }].concat(matched)

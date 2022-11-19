@@ -2,19 +2,24 @@
   <div class="topic-management-detail pt-20">
     <el-form ref="form" inline :model="form" :rules="rules" label-width="120px">
       <div>
-        <el-form-item label="专题名称：" prop="topic_name">
-          <el-input style="width: 520px" size="small" v-model="form.topic_name"></el-input>
+        <el-form-item label="专题名称：" prop="title">
+          <el-input
+            :disabled="readonly"
+            style="width: 520px"
+            size="small"
+            v-model="form.title"
+          ></el-input>
         </el-form-item>
       </div>
 
       <div>
-        <el-form-item label="专题类别：" prop="gallery_id">
-          <el-select size="small" v-model="form.gallery_id">
+        <el-form-item label="专题类别：" prop="topic_id">
+          <el-select :disabled="readonly" size="small" v-model="form.topic_id">
             <el-option
-              v-for="item in category"
+              v-for="item in topicsList"
               :label="item.name"
-              :key="item.gallery_id"
-              :value="item.gallery_id"
+              :key="item.topic_id"
+              :value="item.topic_id"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -40,25 +45,38 @@
         </el-form-item>
       </div>
 
-      <div v-for="(item, index) in form.contentList" :key="index">
-        <div v-if="item.type === contentTypeEnum.TEXT">
+      <div v-for="(item, index) in form.data" :key="index">
+        <div v-if="item.type === topicType.TEXT">
           <el-form-item
             :label="`段落${index + 1} (文本)：`"
-            :prop="`contentList.${index}.text`"
+            :prop="`data.${index}.value`"
             :rules="{
               required: true,
               message: '请输入文本',
               trigger: ['blur', 'change']
             }"
           >
-            <el-input style="width: 520px" type="textarea" v-model="item.text"></el-input>
+            <el-input
+              :disabled="readonly"
+              style="width: 520px"
+              type="textarea"
+              v-model="item.value"
+            ></el-input>
           </el-form-item>
+          <span
+            style="display: inline-block; margin-top: 13px"
+            v-if="form.data.length > 1 && !readonly"
+            @click="handleDeleteItem(index)"
+          >
+            <i class="el-icon-delete"></i>
+          </span>
         </div>
 
-        <div v-if="item.type === contentTypeEnum.IMAGE">
+        <!--        {{ form }}-->
+        <div v-if="item.type === topicType.IMAGE">
           <el-form-item
             :label="`段落${index + 1} (图片)：`"
-            :prop="`contentList.${index}.fileList`"
+            :prop="`data.${index}.fileList`"
             :rules="{
               required: true,
               message: '请上传图片',
@@ -87,28 +105,35 @@
             </el-upload>
           </el-form-item>
 
-          <el-form-item label="图片描述：" prop="category_name">
+          <el-form-item label="图片描述：" prop="describe">
             <el-input
               style="width: 240px"
               :disabled="readonly"
               type="textarea"
-              v-model="item.description"
+              v-model="item.describe"
             ></el-input>
           </el-form-item>
+
+          <span
+            style="display: inline-block; margin-top: 13px"
+            v-if="form.data.length > 1 && !readonly"
+            @click="handleDeleteItem(index)"
+          >
+            <i class="el-icon-delete"></i>
+          </span>
         </div>
       </div>
 
-      <div>
+      <div v-if="!readonly">
         <el-form-item label=" ">
-          <el-button size="mini" round @click="handleAddContent(contentTypeEnum.TEXT)">
+          <el-button size="mini" round @click="handleAddContent(topicType.TEXT)">
             新增文本
           </el-button>
-          <el-button size="mini" round @click="handleAddContent(contentTypeEnum.IMAGE)">
+          <el-button size="mini" round @click="handleAddContent(topicType.IMAGE)">
             新增图片
           </el-button>
         </el-form-item>
       </div>
-      {{ form }}
 
       <div style="border-top: 1px dashed #ccc; padding-top: 20px">
         <el-form-item label=" ">
@@ -127,43 +152,33 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import { importImage, uploadGalleryImage } from '@/api/admin'
+import { Component, Vue } from 'vue-property-decorator'
+import { queryTopicDetailForEdit, addTopic, editTopic, uploadTopicImages } from '@/api/admin'
 import { Form as ElForm } from 'element-ui/types/element-ui'
 import { readFile } from '@/utils/readfile'
+import { topicModel, topicType } from './model'
+import { queryHomePageSource } from '@/api/home'
 
 @Component
 export default class TopicManagementCUDetail extends Vue {
-  private contentTypeEnum = {
-    TEXT: 'text',
-    IMAGE: 'image'
-  }
+  private topicType = topicType
 
-  private form: any = {
+  private form: topicModel = {
     fileList: [],
-    contentList: [
+    data: [
       {
-        type: 'text',
-        text: ''
+        type: topicType.TEXT,
+        value: ''
       },
       {
-        type: 'image',
-        description: '描述',
-        fileList: [
-          // {
-          //   url: 'https://tripod.wx-local.leqiai.cn//upload/important_topics/banners/矿物晶体专题封面图.JPG'
-          // }
-        ]
+        type: topicType.IMAGE,
+        describe: '',
+        fileList: []
       }
     ]
   }
 
-  private readonly category = [
-    { name: '矿物精品', gallery_id: '2' },
-    { name: '岩石精品', gallery_id: '4' },
-    { name: '矿石精品', gallery_id: '3' },
-    { name: '化石精品', gallery_id: '1' }
-  ]
+  private topicsList = []
 
   private dialogImageUrl = ''
   private dialogVisible = false
@@ -171,37 +186,41 @@ export default class TopicManagementCUDetail extends Vue {
   private itemUploading = false
 
   private rules = {
-    topic_name: [{ required: true, message: '请填写专题名称', trigger: 'change' }],
+    title: [{ required: true, message: '请填写专题名称', trigger: 'change' }],
     fileList: [{ required: true, message: '请上传专题封面', trigger: 'blur' }],
     // category_name: [{ required: true, message: '请填写分类名称' }],
     gallery_id: [{ required: true, message: '请选择分类' }],
     specimen_djh: [{ required: true, message: '请填写标本编号' }]
-    // description: [{ required: true, message: '请填写图片描述' }]
+    // describe: [{ required: true, message: '请填写图片描述' }]
   }
 
   private get readonly() {
     return this.$route.query.type == 'view'
   }
 
-  private mounted() {
-    const {
-      specimen_number: specimen_djh,
-      // category_name,
-      gallery_id,
-      image_name,
-      // description,
-      image_url,
-      type
-    } = this.$route.query
+  private async mounted() {
+    const { important_topics } = await queryHomePageSource()
+    this.topicsList = important_topics
+
+    const { type } = this.$route.query
     if (!type || type == 'add') return
-    this.form = {
-      specimen_djh,
-      // category_name,
-      gallery_id,
-      image_name
-      // description
-    }
-    this.form.fileList = [{ url: image_url }]
+    const { articles_id } = this.$route.query
+    const res: topicModel = await queryTopicDetailForEdit(articles_id as string)
+    this.form = { ...res }
+    this.form.fileList = [
+      { url: this.handleUrl(this.form.cover_url || ''), name: this.form.cover_url || '' }
+    ]
+    this.form.data.forEach(item => {
+      if (item.type === topicType.IMAGE) {
+        item.fileList = [{ url: this.handleUrl(item.name || ''), name: item.name || '' }]
+      }
+    })
+  }
+
+  private handleUrl(url: string) {
+    return process.env.VUE_APP_API_ENV == 'development'
+      ? `http://tripod.wx-local.leqiai.cn/${url}`
+      : `${window.location.hostname}/${url}`
   }
 
   private handleChange(file: any, fileList: any) {
@@ -219,9 +238,9 @@ export default class TopicManagementCUDetail extends Vue {
     /** @param data: { data: "base64 data" }*/
     const callback = async (data: any) => {
       try {
-        const { name, url } = await importImage({ name: file.name, ...data })
-        this.form.fileList.push({ url })
-        this.form.image_name = name
+        const { name, url } = await uploadTopicImages({ name: file.name, ...data })
+        this.form.fileList.push({ name, url })
+        this.form.cover_url = name
         ;(this.$refs.form as ElForm).validateField('fileList')
       } catch (e) {
         console.log(e, 'doImageUpload')
@@ -236,7 +255,7 @@ export default class TopicManagementCUDetail extends Vue {
     this.form.fileList = fileList
     this.$delete(this.form, 'fileList')
     this.$set(this.form, 'fileList', fileList)
-    this.form.image_name = ''
+    this.form.cover_url = ''
   }
 
   /** 段落图片上传 */
@@ -261,12 +280,12 @@ export default class TopicManagementCUDetail extends Vue {
     /** @param data: { data: "base64 data" }*/
     const callback = async (data: any) => {
       try {
-        const { name, url } = await importImage({ name: file.name, ...data })
-        currentItemFileList.push({ url })
+        const { name, url } = await uploadTopicImages({ name: file.name, ...data })
+        currentItemFileList.push({ name, url })
         // this.form.fileList.push({ url })
         // this.form.image_name = name
         console.log(name)
-        ;(this.$refs.form as ElForm).validateField(`contentList.${currentItemIndex}.fileList`)
+        ;(this.$refs.form as ElForm).validateField(`data.${currentItemIndex}.fileList`)
       } catch (e) {
         console.log(e, 'doImageUploadForContent')
       } finally {
@@ -278,7 +297,9 @@ export default class TopicManagementCUDetail extends Vue {
 
   /** 段落图片删除 */
   private handleRemoveForContent(file: any, fileList: any, currentItemIndex: any) {
-    this.form.contentList[currentItemIndex].fileList = []
+    this.form.data[currentItemIndex].fileList = []
+    this.$delete(this.form.data[currentItemIndex], 'fileList')
+    this.$set(this.form.data[currentItemIndex], 'fileList', [])
   }
 
   private handlePictureCardPreview(file: any) {
@@ -287,31 +308,26 @@ export default class TopicManagementCUDetail extends Vue {
   }
 
   private handleSave() {
-    console.log('handleSave')
     ;(this.$refs.form as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         try {
-          const {
-            // category_name,
-            gallery_id,
-            // description,
-            image_name,
-            specimen_djh
-          } = this.form
-          const { type, best_photo_gallery_id } = this.$route.query
-          const params = {
-            // category_name,
-            // description,
-            image_name,
-            specimen_djh,
-            gallery_id
+          const params = { ...this.form }
+          params.cover_url = params.fileList[0].name // 封面
+          params.data.forEach(item => {
+            if (item.type === topicType.IMAGE) {
+              item.name = (item.fileList && item.fileList[0].name) || ''
+            }
+          })
+          const { type, articles_id } = this.$route.query
+          if (type == 'edit') {
+            await editTopic(params, articles_id as string)
+          } else if (type == 'add') {
+            await addTopic(params)
           }
-          const photo_gallery_id = type == 'edit' ? best_photo_gallery_id : ''
-          await uploadGalleryImage(params, photo_gallery_id as string)
           this.$message.warning('保存成功')
           this.goBack()
         } catch (e) {
-          console.warn(e, 'login')
+          console.warn(e, 'handleSave')
         }
       } else {
         return false
@@ -322,26 +338,26 @@ export default class TopicManagementCUDetail extends Vue {
   private handleAddContent(type: string) {
     console.log(type)
     switch (type) {
-      case this.contentTypeEnum.TEXT:
-        this.form.contentList.push({
+      case topicType.TEXT:
+        this.form.data.push({
           type,
-          text: ''
+          value: ''
         })
         break
-      case this.contentTypeEnum.IMAGE:
-        this.form.contentList.push({
+      case topicType.IMAGE:
+        this.form.data.push({
           type,
-          description: '描述',
-          fileList: [
-            {
-              url: 'https://tripod.wx-local.leqiai.cn//upload/important_topics/banners/矿物晶体专题封面图.JPG'
-            }
-          ]
+          describe: '',
+          fileList: []
         })
         break
       default:
         break
     }
+  }
+
+  private handleDeleteItem(index: number) {
+    this.form.data.splice(index, 1)
   }
 
   private goBack() {

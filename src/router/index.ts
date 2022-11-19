@@ -354,11 +354,11 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // 管理端路由
   const whiteList = [
-    'SpecimenManagement',
-    'PhotoManagement',
-    'SpecimenManagementDetail',
-    'SpecimenManagementUDDetail',
-    'PhotoManagementDetail',
+    // 'SpecimenManagement',
+    // 'PhotoManagement',
+    // 'SpecimenManagementDetail',
+    // 'SpecimenManagementUDDetail',
+    // 'PhotoManagementDetail',
     'Dashboard'
   ]
   if (to.meta && to.query.metaTitle) {

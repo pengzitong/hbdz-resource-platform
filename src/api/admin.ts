@@ -1,5 +1,6 @@
 import request from '@/utils/index'
 import qs from 'qs'
+import { topicModel } from '@/views/topic-management/model'
 
 export const login = (data: { account_name: string; password: string }) => {
   return request.post('/public_api/admin/login', data)
@@ -52,4 +53,28 @@ export const deleteGalleryImage = (best_photo_gallery_id: string | number) => {
 
 export const querySpecimentDetailForEdit = (specimen_number: string) => {
   return request.get(`/admin_api/specimen/${specimen_number}`)
+}
+
+export const queryTopicsList = (params: any) => {
+  return request.get(`/admin_api/important_topics?${qs.stringify(params)}`)
+}
+
+export const addTopic = (data: topicModel) => {
+  return request.post(`/admin_api/important_topics/articles`, data)
+}
+
+export const uploadTopicImages = (data: any) => {
+  return request.post(`/admin_api/important_topics/image/upload`, data)
+}
+
+export const queryTopicDetailForEdit = (articles_id: string) => {
+  return request.get(`/admin_api/important_topics/articles/${articles_id}/edit`)
+}
+
+export const editTopic = (data: topicModel, articles_id: string) => {
+  return request.post(`/admin_api/important_topics/articles/${articles_id}/edit`, data)
+}
+
+export const deleteTopic = (articles_id: string) => {
+  return request.post(`/admin_api/important_topics/articles/${articles_id}/delete`)
 }

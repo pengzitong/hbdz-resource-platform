@@ -2,25 +2,25 @@
   <div class="topic-management-container">
     <div class="search-form">
       <el-form ref="searchForm" :model="searchForm" inline label-width="120px">
-        <el-form-item prop="keyword" label="查询关键字：">
-          <el-input
-            @keyup.enter.native="query"
-            style="width: 300px"
-            v-model="searchForm.keyword"
-            size="small"
-            placeholder="请输入关键字（颜色、名称等）"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="gallery_id" label="类别：">
-          <el-select @change="query" size="small" v-model="searchForm.gallery_id">
+        <!--        <el-form-item prop="keyword" label="查询关键字：">-->
+        <!--          <el-input-->
+        <!--            @keyup.enter.native="query"-->
+        <!--            style="width: 300px"-->
+        <!--            v-model="searchForm.keyword"-->
+        <!--            size="small"-->
+        <!--            placeholder="请输入关键字（颜色、名称等）"-->
+        <!--          ></el-input>-->
+        <!--        </el-form-item>-->
+
+        <el-form-item label="专题类别：" prop="topic_id">
+          <el-select @change="query" size="small" v-model="searchForm.topic_id">
             <el-option
-              v-for="item in category"
+              v-for="item in topicsList"
               :label="item.name"
-              :key="item.gallery_id"
-              :value="item.gallery_id"
+              :key="item.topic_id"
+              :value="item.topic_id"
             ></el-option>
           </el-select>
-          <!--          <el-input v-model="searchForm.gallery_id" size="small" placeholder="请输入"></el-input>-->
         </el-form-item>
       </el-form>
     </div>
@@ -38,28 +38,38 @@
 
     <div class="table-wrapper">
       <el-table class="mt-12" border :data="imagesList" stripe>
-        <el-table-column prop="resource_name" label="专题名称">
+        <el-table-column prop="title" label="专题名称">
           <template slot-scope="scope">
             <el-link
               type="primary"
               style="font-weight: 400"
               @click="handleViewTopicDetail(scope.row)"
             >
-              {{ scope.row.resource_name }}
+              {{ scope.row.title }}
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="图片">
+        <el-table-column prop="topic_name" label="专题类别"></el-table-column>
+
+        <el-table-column prop="cover_url" label="专题封面图片">
           <template slot-scope="scope">
             <el-image
-              :preview-src-list="[scope.row.image_url]"
-              :src="scope.row.image_url"
+              :preview-src-list="[
+                env == 'development'
+                  ? `http://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
+                  : `${scope.row.cover_url}`
+              ]"
+              :src="
+                env == 'development'
+                  ? `http://tripod.wx-local.leqiai.cn/${scope.row.cover_url}`
+                  : `${scope.row.cover_url}`
+              "
               style="width: 80px; height: 50px"
               fit="cover"
             ></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="best_photo_gallery_id" label="专题ID"></el-table-column>
+        <el-table-column prop="articles_id" label="专题ID"></el-table-column>
         <el-table-column prop="name" label="操作" width="180">
           <template slot-scope="scope">
             <el-button
@@ -104,37 +114,36 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import Pagination from '@/components/pagination.vue'
 import PaginationToQuery from '@/mixins/pagination-to-query'
-import { queryPhotoGalleryList } from '@/api/photo-gallery'
 import { IMineralProduct } from '@/models'
-import qs from 'qs'
 import { Form as ElForm } from 'element-ui/types/element-ui'
-import { deleteGalleryImage } from '@/api/admin'
+import { deleteTopic, queryTopicsList } from '@/api/admin'
 import { confirm } from '@/utils/decorator'
+import { queryHomePageSource } from '@/api/home'
 
 @Component({ components: { Pagination } })
 export default class TopicManagement extends Mixins(PaginationToQuery) {
-  private searchForm: any = {
-    gallery_id: 2
-  }
+  private searchForm: any = {}
 
   pageInfo = {
     page: 1,
     num: 10,
     all_page: 0
   }
-  private textButtonLoading = false
 
-  private readonly category = [
-    { name: '矿物精品', gallery_id: 2 },
-    { name: '岩石精品', gallery_id: 4 },
-    { name: '矿石精品', gallery_id: 3 },
-    { name: '化石精品', gallery_id: 1 }
-  ]
+  private textButtonLoading = false
 
   private imagesList: IMineralProduct[] = []
 
-  private mounted() {
+  private topicsList = []
+
+  private get env() {
+    return process.env.VUE_APP_API_ENV
+  }
+
+  private async mounted() {
     this.query()
+    const { important_topics } = await queryHomePageSource()
+    this.topicsList = important_topics
   }
 
   private async query() {
@@ -146,7 +155,7 @@ export default class TopicManagement extends Mixins(PaginationToQuery) {
         num: this.pageInfo.num
       }
 
-      const { data, all_page } = await queryPhotoGalleryList(params)
+      const { data, all_page } = await queryTopicsList(params)
 
       this.imagesList = [...data]
       this.pageInfo.all_page = all_page
@@ -163,37 +172,32 @@ export default class TopicManagement extends Mixins(PaginationToQuery) {
   }
 
   private handleAdd() {
+    this.$router.push(`/topic-management/cu-detail?metaTitle=新增专题&type=add`)
+  }
+
+  handleViewTopicDetail({ articles_id }: any) {
     this.$router.push(
-      // `/photo-management/detail?metaTitle=新增图片&type=add&gallery_id=${this.searchForm.gallery_id}`
-      `/topic-management/cu-detail?metaTitle=新增专题&type=add&gallery_id=${this.searchForm.gallery_id}`
+      `/topic-management/topic-detail?metaTitle=专题详情&articles_id=${articles_id}`
     )
   }
 
-  handleViewTopicDetail({ article_id }: any) {
-    this.$router.push(`/topic-management/topic-detail?metaTitle=专题详情&articles_id=1`)
-  }
-
-  private handleView(row: any) {
+  private handleView({ articles_id }: any) {
     this.$router.push(
-      `/topic-management/cu-detail?metaTitle=专题详情&gallery_id=${
-        this.searchForm.gallery_id
-      }&${qs.stringify(row)}&type=view`
+      `/topic-management/cu-detail?metaTitle=专题详情&articles_id=${articles_id}&type=view`
     )
   }
 
-  private handleEdit(row: any) {
+  private handleEdit({ articles_id }: any) {
     this.$router.push(
-      `/topic-management/cu-detail?metaTitle=编辑专题&gallery_id=${
-        this.searchForm.gallery_id
-      }&${qs.stringify(row)}&type=edit`
+      `/topic-management/cu-detail?metaTitle=编辑专题&articles_id=${articles_id}&type=edit`
     )
   }
 
   @confirm('确认要删除此专题吗？')
-  private async handleDelete({ best_photo_gallery_id }: any) {
+  private async handleDelete({ articles_id }: any) {
     try {
       this.textButtonLoading = true
-      await deleteGalleryImage(best_photo_gallery_id)
+      await deleteTopic(articles_id)
       this.$message.success('删除成功')
       this.query()
     } catch (e) {
