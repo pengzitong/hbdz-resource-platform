@@ -120,7 +120,7 @@ export default class Detail extends Vue {
     { key: 'feature_description', label: '简要特征描述' },
     { key: 'provider', label: '资源提供者' },
     { key: 'provide_time', label: '资源提供日期', tooltip: '填写格式为220927,或"不详"' },
-    { key: 'geological_occurrence', label: '地质产状或层位' },
+    { key: 'geological_occurrence', label: '地质产状或层位', required: false },
     { key: 'formative_era', label: '资源形成时代' },
     { key: 'country', label: '国家' },
     { key: 'province', label: '产地（省）', type: 'enum', allowCreate: true },
