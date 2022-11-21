@@ -26,6 +26,10 @@ export default class Dashboard extends Vue {
     { path: '/specimen-management/ud-detail?metaTitle=新增标本&type=add', name: '新增标本' },
     { path: '/topic-management/cu-detail?metaTitle=新增专题&type=add', name: '新增专题' }
   ]
+
+  private mounted() {
+    document.title = '湖北地质博物馆标本资源库'
+  }
 }
 </script>
 

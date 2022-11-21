@@ -241,7 +241,7 @@ const routes: Array<RouteConfig> = [
         path: '/dashboard',
         component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
         name: 'Dashboard',
-        meta: { title: '湖北地质博物馆标本资源库' }
+        meta: { title: '首页' }
       }
     ]
     // component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue')
@@ -257,7 +257,7 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: "specimen-management" */ '@/views/specimen-management/index.vue'
           ),
         name: 'SpecimenManagement',
-        meta: { title: '标本管理', keepAlive: true }
+        meta: { title: '标本管理' }
       },
       {
         path: '/specimen-management/detail',

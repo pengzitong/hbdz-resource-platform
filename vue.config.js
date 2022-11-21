@@ -11,7 +11,7 @@ module.exports = {
   },
   chainWebpack: config => {
     config.plugin('html').tap(args => {
-      args[0].title = '湖北省地质博物馆'
+      args[0].title = '湖北地质博物馆标本资源库'
       return args
     })
   }

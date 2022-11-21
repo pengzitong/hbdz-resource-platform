@@ -190,11 +190,17 @@ export default class PhotoManagement extends Mixins(PaginationToQuery) {
   }
 
   private handleEdit(row: any) {
-    this.$router.push(
-      `/photo-management/detail?metaTitle=编辑图片&gallery_id=${
+    // this.$router.push(
+    //   `/photo-management/detail?metaTitle=编辑图片&gallery_id=${
+    //     this.searchForm.gallery_id
+    //   }&${qs.stringify(row)}&type=edit`
+    // )
+    const routeData = this.$router.resolve({
+      path: `/photo-management/detail?metaTitle=编辑图片&gallery_id=${
         this.searchForm.gallery_id
       }&${qs.stringify(row)}&type=edit`
-    )
+    })
+    window.open(routeData.href, '_blank')
   }
 
   @confirm('确认要删除此图片吗？')

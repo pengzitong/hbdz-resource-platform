@@ -188,9 +188,13 @@ export default class TopicManagement extends Mixins(PaginationToQuery) {
   }
 
   private handleEdit({ articles_id }: any) {
-    this.$router.push(
-      `/topic-management/cu-detail?metaTitle=编辑专题&articles_id=${articles_id}&type=edit`
-    )
+    // this.$router.push(
+    //   `/topic-management/cu-detail?metaTitle=编辑专题&articles_id=${articles_id}&type=edit`
+    // )
+    const routeData = this.$router.resolve({
+      path: `/topic-management/cu-detail?metaTitle=编辑专题&articles_id=${articles_id}&type=edit`
+    })
+    window.open(routeData.href, '_blank')
   }
 
   @confirm('确认要删除此专题吗？')
