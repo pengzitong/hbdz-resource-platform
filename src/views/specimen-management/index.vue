@@ -206,7 +206,11 @@
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="foreign_language_name" show-overflow-tooltip label="资源外文名" />
+        <el-table-column prop="foreign_language_name" show-overflow-tooltip label="资源外文名">
+          <template slot-scope="scope">
+            <ForeignLanguageName :name="scope.row.foreign_language_name" />
+          </template>
+        </el-table-column>
         <el-table-column prop="complete_origin" show-overflow-tooltip label="产地" />
         <el-table-column prop="collation_name" show-overflow-tooltip width="100" label="资源归类" />
         <el-table-column

@@ -77,7 +77,7 @@
       </el-table-column>
       <el-table-column prop="foreign_language_name" label="资源外文名">
         <template slot-scope="scope">
-          <span class="language-name" v-html="scope.row.foreign_language_name"></span>
+          <ForeignLanguageName :name="scope.row.foreign_language_name" />
         </template>
       </el-table-column>
       <el-table-column prop="complete_origin" label="产地" width="300" />
@@ -200,9 +200,6 @@ export default class UnionSearchList extends Mixins<any>(PaginationToQuery, Quer
     .el-form-item {
       margin-bottom: 0;
     }
-  }
-  .language-name {
-    font-style: italic;
   }
 }
 </style>

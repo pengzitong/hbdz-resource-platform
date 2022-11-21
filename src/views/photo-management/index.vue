@@ -49,11 +49,11 @@
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column
-          prop="foreign_language_name"
-          label="标本外文名"
-          width="180"
-        ></el-table-column>
+        <el-table-column prop="foreign_language_name" label="标本外文名" width="180">
+          <template slot-scope="scope">
+            <ForeignLanguageName :name="scope.row.foreign_language_name" />
+          </template>
+        </el-table-column>
         <el-table-column prop="name" label="图片" width="180">
           <template slot-scope="scope">
             <el-image
