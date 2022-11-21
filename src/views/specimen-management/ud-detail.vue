@@ -216,7 +216,7 @@ export default class Detail extends Vue {
     const { type } = this.$route.query
     if (type == 'edit' || type == 'view') {
       await this.queryDetail()
-      if (this.form.province.indexOf('中国') > -1) {
+      if (this.form.country.indexOf('中国') > -1) {
         this.selects_options.province = this.province_list
       }
     }
