@@ -15,7 +15,10 @@
           <span>{{ item.left.label }}：{{ passport_information[item.left.field] }}</span>
         </td>
         <td v-if="item.right">
-          <span>{{ item.right.label }}：<span class="special-field" v-html="passport_information[item.right.field]"></span></span>
+          <span>
+            {{ item.right.label }}：
+            <span class="special-field" v-html="passport_information[item.right.field]"></span>
+          </span>
         </td>
       </tr>
       <!--标记信息-->
@@ -98,12 +101,12 @@
                 <td style="width: 10%; border: none">图片资料：</td>
                 <td style="width: 90%; border-top: none">
                   <el-image
-                      v-for="(src, index) in supplementary_descriptive_information.image_urls || []"
-                      :key="index"
-                      :preview-src-list="supplementary_descriptive_information.image_urls"
-                      style="width: 100px; height: 60px;margin-right: 5px"
-                      fit="cover"
-                      :src="src"
+                    v-for="(src, index) in supplementary_descriptive_information.image_urls || []"
+                    :key="index"
+                    :preview-src-list="supplementary_descriptive_information.image_urls"
+                    style="width: 100px; height: 60px; margin-right: 5px"
+                    fit="cover"
+                    :src="src"
                   ></el-image>
                 </td>
               </tr>
@@ -280,6 +283,9 @@ export default class SpecimenDetail extends Vue {
       const { specimen_number } = this.$route.query
       const { data } = await querySpecimenDetail(specimen_number as string)
       this.form = { ...data }
+      if (this.passport_information.resource_name) {
+        document.title = this.passport_information.resource_name
+      }
     } catch (e) {
       console.warn(e, 'queryDetail')
     }

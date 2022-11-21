@@ -262,7 +262,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Vue } from 'vue-property-decorator'
 import Pagination from '@/components/pagination.vue'
 import { confirm } from '@/utils/decorator'
 import PaginationToQuery from '@/mixins/pagination-to-query'
@@ -272,6 +272,7 @@ import { deleteSpecimen, exportExcel, importExcelPost, importImagesPost } from '
 import { downloadFile } from '@/utils/common'
 import { readFile } from '@/utils/readfile'
 import QuerySelectLists from '@/mixins/querySelectLists'
+import { NavigationGuardNext, Route } from 'vue-router'
 
 @Component({ components: { Pagination } })
 export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, QuerySelectLists) {
@@ -296,6 +297,23 @@ export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, Q
   private textButtonLoading = false
 
   private specimenLists: ISpecimen[] = []
+
+  private beforeRouteLeave(to: Route, from: Route, next: NavigationGuardNext<Vue>) {
+    console.log(to.name, from, 'to')
+    // if (to.name == 'SpecimenManagementDetail' || to.name == 'SpecimenManagementUDDetail') {
+    //   from.meta && (from.meta.keepAlive = true)
+    // }
+    // else {
+    //   from.meta && (from.meta.keepAlive = false)
+    // }
+    if (to.name != 'SpecimenManagementDetail' && to.name != 'SpecimenManagementUDDetail') {
+      from.meta && (from.meta.keepAlive = false)
+    } else {
+      from.meta && (from.meta.keepAlive = true)
+    }
+
+    next()
+  }
 
   private mounted() {
     this.query()
