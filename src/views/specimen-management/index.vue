@@ -406,19 +406,24 @@ export default class SpecimenManagement extends Mixins<any>(PaginationToQuery, Q
   }
 
   private handleAdd() {
-    this.$router.push(`/specimen-management/ud-detail?metaTitle=新增标本&type=add`)
+    const routeData = this.$router.resolve(
+      `/specimen-management/ud-detail?metaTitle=新增标本&type=add`
+    )
+    window.open(routeData.href, '_blank')
   }
 
   private handleViewSpecimenDetail({ specimen_number }: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `/specimen-management/detail?metaTitle=标本详情&specimen_number=${specimen_number}`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleView({ specimen_number }: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `/specimen-management/ud-detail?metaTitle=标本信息&type=view&specimen_number=${specimen_number}`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleEdit({ specimen_number }: any) {

@@ -172,19 +172,24 @@ export default class TopicManagement extends Mixins(PaginationToQuery) {
   }
 
   private handleAdd() {
-    this.$router.push(`/topic-management/cu-detail?metaTitle=新增专题&type=add`)
+    const routeData = this.$router.resolve(
+      `/topic-management/cu-detail?metaTitle=新增专题&type=add`
+    )
+    window.open(routeData.href, '_blank')
   }
 
   handleViewTopicDetail({ articles_id }: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `/topic-management/topic-detail?metaTitle=专题详情&articles_id=${articles_id}`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleView({ articles_id }: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `/topic-management/cu-detail?metaTitle=专题详情&articles_id=${articles_id}&type=view`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleEdit({ articles_id }: any) {

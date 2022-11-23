@@ -158,7 +158,7 @@
 
     <div class="print-wrapper">
       <slot v-if="$slots['bottom-button']" name="bottom-button"></slot>
-      <el-button v-else size="small" @click="$router.back()" type="primary">返回</el-button>
+      <!--      <el-button v-else size="small" @click="$router.back()" type="primary">返回</el-button>-->
     </div>
   </div>
 </template>

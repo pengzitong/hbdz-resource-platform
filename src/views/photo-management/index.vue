@@ -169,24 +169,26 @@ export default class PhotoManagement extends Mixins(PaginationToQuery) {
   }
 
   private handleAdd() {
-    this.$router.push(
-      // `/photo-management/detail?metaTitle=新增图片&type=add&gallery_id=${this.searchForm.gallery_id}`
+    const routeData = this.$router.resolve(
       `/photo-management/detail?metaTitle=新增图片&type=add&gallery_id=${this.searchForm.gallery_id}`
     )
+    window.open(routeData.href, '_blank')
   }
 
   handleViewSpecimenDetail({ specimen_number }: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `specimen-management/detail?metaTitle=标本详情&specimen_number=${specimen_number}`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleView(row: any) {
-    this.$router.push(
+    const routeData = this.$router.resolve(
       `/photo-management/detail?metaTitle=图片详情&gallery_id=${
         this.searchForm.gallery_id
       }&${qs.stringify(row)}&type=view`
     )
+    window.open(routeData.href, '_blank')
   }
 
   private handleEdit(row: any) {

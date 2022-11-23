@@ -135,12 +135,10 @@
         </el-form-item>
       </div>
 
-      <div style="border-top: 1px dashed #ccc; padding-top: 20px">
+      <div v-if="!readonly" style="border-top: 1px dashed #ccc; padding-top: 20px">
         <el-form-item label=" ">
-          <el-button v-if="!readonly" type="primary" size="small" @click="handleSave">
-            保存
-          </el-button>
-          <el-button size="small" @click="goBack">返回</el-button>
+          <el-button type="primary" size="small" @click="handleSave">保存</el-button>
+          <!--          <el-button size="small" @click="goBack">返回</el-button>-->
         </el-form-item>
       </div>
     </el-form>

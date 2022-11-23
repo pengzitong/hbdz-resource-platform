@@ -49,7 +49,7 @@
 
       <el-form-item label=" ">
         <el-button v-if="!readonly" type="primary" size="small" @click="handleSave">保存</el-button>
-        <el-button size="small" @click="goBack">返回</el-button>
+        <!--        <el-button size="small" @click="goBack">返回</el-button>-->
       </el-form-item>
     </el-form>
     <el-dialog :visible.sync="dialogVisible">

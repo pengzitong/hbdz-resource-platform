@@ -75,9 +75,9 @@
       </el-form-item>
 
       <br />
-      <el-form-item label=" ">
-        <el-button v-if="!readonly" type="primary" @click="handleSave" size="small">保存</el-button>
-        <el-button @click="handleBack" size="small">返回</el-button>
+      <el-form-item v-if="!readonly" label=" ">
+        <el-button type="primary" @click="handleSave" size="small">保存</el-button>
+        <!--        <el-button @click="handleBack" size="small">返回</el-button>-->
       </el-form-item>
     </el-form>
 
