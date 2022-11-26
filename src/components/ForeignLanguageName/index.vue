@@ -12,7 +12,6 @@ export default class ForeignLanguageName extends Vue {
 
 <style lang="scss" scoped>
 .foreign-language-name {
-  font-style: italic;
   ::v-deep i {
     font-style: italic;
   }
